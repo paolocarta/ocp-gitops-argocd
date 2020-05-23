@@ -15,8 +15,8 @@ spec:
     externalDb: false
     chePostgresHostName: ''
     chePostgresPort: ''
-    chePostgresUser: ''
-    chePostgresPassword: ''
+    chePostgresUser: 'pgche'
+    chePostgresPassword: 'aufPU9dP1HjV'
     chePostgresDb: ''
   auth:
     openShiftoAuth: true
