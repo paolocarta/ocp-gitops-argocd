@@ -1,10 +1,42 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: demolab
+  name: demoapp
   namespace: argocd
 spec:
   description: Lab Cluster
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+  - https://github.com/paolocarta/ocp-gitops-argocd.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infra
+  namespace: argocd
+spec:
+  description: Lab Cluster
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+  - https://github.com/paolocarta/ocp-gitops-argocd.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: operators
+  namespace: argocd
+spec:
+  description: Lab Operators
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
@@ -23,7 +55,7 @@ spec:
   destination:
     namespace: amqstreams
     server: 'https://kubernetes.default.svc'
-  project: demolab
+  project: infra
   source:
     path: 5-example-data/amqstreams
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -46,7 +78,7 @@ spec:
     - /spec/auth/identityProviderImage
     - /spec/auth/identityProviderURL
     kind: CheCluster
-  project: demolab
+  project: infra
   source:
     path: 5-example-data/codereadyworkspaces
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -61,7 +93,7 @@ spec:
   destination:
     namespace: openshift-operators
     server: 'https://kubernetes.default.svc'
-  project: demolab
+  project: operators
   source:
     path: 5-example-data/operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -76,7 +108,7 @@ spec:
   destination:
     namespace: openshift-metering
     server: 'https://kubernetes.default.svc'
-  project: demolab
+  project: infra
   source:
     directory:
       jsonnet: {}
@@ -94,7 +126,7 @@ spec:
   destination:
     namespace: developertools
     server: 'https://kubernetes.default.svc'
-  project: demolab
+  project: infra
   source:
     directory:
       jsonnet: {}
@@ -106,14 +138,40 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ossm-app-of-apps
+  name: bookinfo
   namespace: argocd
 spec:
   destination:
-    namespace: default
+    namespace: bookinfo
     server: 'https://kubernetes.default.svc'
-  project: demolab
+  project: demoapp
   source:
-    path: 5-example-data/ossm-app-of-apps
-    repoURL: 'https://github.com/paolocarta/ocp-gitops-argocd.git'
+    path: 5-example-data/bookinfo
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift-service-mesh
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-system
+    server: 'https://kubernetes.default.svc'
+  ignoreDifferences:
+  - group: maistra.io
+    jsonPointers:
+    - /spec/members
+    kind: ServiceMeshMemberRoll
+  project: infra
+  source:
+    path: 5-example-data/servicemesh
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true

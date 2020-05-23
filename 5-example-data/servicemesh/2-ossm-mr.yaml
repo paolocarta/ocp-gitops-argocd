@@ -7,3 +7,4 @@ spec:
   members:
     - developerteam1
     - developerteam2
+    - bookinfo
