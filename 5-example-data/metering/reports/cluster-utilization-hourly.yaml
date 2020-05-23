@@ -1,0 +1,30 @@
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: cluster-cpu-utilization-hourly
+spec:
+  query: "cluster-cpu-utilization"
+  inputs:
+  - name: ClusterCpuCapacityReportName
+    value: cluster-cpu-capacity-hourly
+  - name: ClusterCpuUsageReportName
+    value: cluster-cpu-usage-hourly
+  schedule:
+    period: "hourly"
+
+---
+
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: cluster-memory-utilization-hourly
+spec:
+  query: "cluster-memory-utilization"
+  inputs:
+  - name: ClusterMemoryCapacityReportName
+    value: cluster-memory-capacity-hourly
+  - name: ClusterMemoryUsageReportName
+    value: cluster-memory-usage-hourly
+  schedule:
+    period: "hourly"
+

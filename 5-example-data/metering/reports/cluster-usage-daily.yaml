@@ -1,0 +1,27 @@
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: cluster-cpu-usage-daily
+spec:
+  query: "cluster-cpu-usage"
+  # this configures the report to aggregate the hourly one
+  inputs:
+  - name: ClusterCpuUsageReportName
+    value: cluster-cpu-usage-hourly
+  schedule:
+    period: "daily"
+
+---
+
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: cluster-memory-usage-daily
+spec:
+  query: "cluster-memory-usage"
+  # this configures the report to aggregate the hourly one
+  inputs:
+  - name: ClusterMemoryUsageReportName
+    value: cluster-memory-usage-hourly
+  schedule:
+    period: "daily"

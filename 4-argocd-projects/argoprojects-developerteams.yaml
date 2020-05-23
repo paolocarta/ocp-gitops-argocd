@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: developerteam1
+  namespace: argocd
+spec:
+  description: 'Developer Team 1'
+  destinations:
+  - namespace: developerteam1
+    server: https://kubernetes.default.svc
+  roles:
+  - description: 'Development Team 1 Admins'
+    groups:
+    - developerteam1
+    name: developerteam1
+    policies:
+    - p, proj:developerteam1:developerteam1, applications, *, developerteam1/*, allow
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: developerteam2
+  namespace: argocd
+spec:
+  description: 'Developer Team 2'
+  destinations:
+  - namespace: developerteam2
+    server: https://kubernetes.default.svc
+  roles:
+  - description: 'Development Team 2 Admins'
+    groups:
+    - developerteam2
+    name: developerteam2
+    policies:
+    - p, proj:developerteam2:developerteam2, applications, *, developerteam2/*, allow
+  sourceRepos:
+  - '*'

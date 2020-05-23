@@ -1,0 +1,19 @@
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: namespace-memory-usage-daily
+spec:
+  query: "namespace-memory-usage"
+  schedule:
+    period: "daily"
+
+---
+
+apiVersion: metering.openshift.io/v1
+kind: Report
+metadata:
+  name: namespace-cpu-usage-daily
+spec:
+  query: "namespace-cpu-usage"
+  schedule:
+    period: "daily"

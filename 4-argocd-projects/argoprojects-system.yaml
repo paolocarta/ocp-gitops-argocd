@@ -1,0 +1,119 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: demolab
+  namespace: argocd
+spec:
+  description: Lab Cluster
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+  - https://github.com/ekrunch/argocd-test.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: amqstreams
+  namespace: argocd
+spec:
+  destination:
+    namespace: amqstreams
+    server: 'https://kubernetes.default.svc'
+  project: demolab
+  source:
+    path: 5-example-data/amqstreams
+    repoURL: https://github.com/ekrunch/argocd-test.git
+    targetRevision: HEAD
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: codereadyworkspaces
+  namespace: argocd
+spec:
+  destination:
+    namespace: codereadyworkspaces
+    server: 'https://kubernetes.default.svc'
+  ignoreDifferences:
+  - group: org.eclipse.che
+    jsonPointers:
+    - /spec/auth/identityProviderClientId
+    - /spec/auth/identityProviderRealm
+    - /spec/auth/identityProviderImage
+    - /spec/auth/identityProviderURL
+    kind: CheCluster
+  project: demolab
+  source:
+    path: 5-example-data/codereadyworkspaces
+    repoURL: https://github.com/ekrunch/argocd-test.git
+    targetRevision: HEAD
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift-operators
+  namespace: argocd
+spec:
+  destination:
+    namespace: openshift-operators
+    server: 'https://kubernetes.default.svc'
+  project: demolab
+  source:
+    path: 5-example-data/operators
+    repoURL: https://github.com/ekrunch/argocd-test.git
+    targetRevision: HEAD
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift-metering
+  namespace: argocd
+spec:
+  destination:
+    namespace: openshift-metering
+    server: 'https://kubernetes.default.svc'
+  project: demolab
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: 5-example-data/metering
+    repoURL: https://github.com/ekrunch/argocd-test.git
+    targetRevision: HEAD
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: developertools
+  namespace: argocd
+spec:
+  destination:
+    namespace: developertools
+    server: 'https://kubernetes.default.svc'
+  project: demolab
+  source:
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: 5-example-data/developertools
+    repoURL: https://github.com/ekrunch/argocd-test.git
+    targetRevision: HEAD
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ossm-app-of-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  project: demolab
+  source:
+    path: 5-example-data/ossm-app-of-apps
+    repoURL: 'https://github.com/ekrunch/argocd-test.git'
+    targetRevision: HEAD
