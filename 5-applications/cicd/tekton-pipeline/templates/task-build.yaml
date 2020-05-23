@@ -1,0 +1,136 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  labels:
+{{ include "springboot-tekton.labels" . | nindent 4 }}
+  name: maven-build-binary-build
+spec:
+  workspaces:
+  - name: maven-repo
+  inputs:
+    params:
+    - name: GOALS
+      description: The Maven goals to run
+      type: array
+      default: ["package"]
+{{- if .Values.sonar.enabled }}
+    - name: volumeName
+      description: The sonar-script volume
+      type: string
+      default: sonar-volume
+    - name: CFGNAME
+      description: the sonar config map name containing the quality gate script
+      type: string
+      default: sonar
+{{- end }}
+    - name: BUILDER_IMAGE
+      description: The location of the buildah builder image.
+      default: quay.io/buildah/stable:v1.11.0
+    - name: DOCKERFILE
+      description: Path to the Dockerfile to build.
+      default: ./Dockerfile
+    - name: CONTEXT
+      description: Path to the directory to use as context.
+      default: .
+    - name: TLSVERIFY
+      description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+      default: "false"
+    - name: FORMAT
+      description: The format of the built container, oci or docker
+      default: "oci"
+    resources:
+    - name: source
+      type: git
+  outputs:
+    resources:
+    - name: image
+      type: image
+  steps:   
+  - name: package
+    image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
+    workingDir: /workspace/source
+    command:
+    - {{ .Values.maven.command }}
+    args:
+    - -Dmaven.repo.local=$(workspaces.maven-repo.path)
+    - "$(inputs.params.GOALS)"
+{{- if .Values.sonar.enabled }}
+  - name: sonar-scan
+    image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
+    workingDir: /workspace/source
+    command:
+    - {{ .Values.maven.command }}
+    args:
+    - -Dmaven.repo.local=$(workspaces.maven-repo.path)
+    - -Dsonar.host.url={{ .Values.sonar.url }}
+    - sonar:sonar
+  - name: quality-gate
+    image: quay.io/sychen/openshift-cli-jq:latest
+    command: ["bash"]
+    workingDir: /workspace/source
+    args:
+      - /var/sonar/sonar.sh
+    volumeMounts:
+    - name: "$(inputs.params.volumeName)"
+      mountPath: /var/sonar
+{{- end }}
+  - name: make-upload-dir
+    image: quay.io/openshift-pipeline/openshift-cli:latest
+    command: ["mkdir"]
+    args:
+      - -p
+      - /workspace/source/upload
+  - name: copy-assets 
+    image: quay.io/openshift-pipeline/openshift-cli:latest
+    command: ["cp"]
+    args:
+      - /workspace/source/target/shift-rest-1.0.0-SNAPSHOT.jar
+      - /workspace/source/upload 
+  - name: copy-assets-2
+    image: quay.io/openshift-pipeline/openshift-cli:latest
+    command: ["cp"]
+    args:
+      - /workspace/source/Dockerfile
+      - /workspace/source/upload 
+  - name: build-image
+    image: $(inputs.params.BUILDER_IMAGE)
+    workingDir: /workspace/source/upload
+    command: ['buildah']
+    args:
+      - bud
+      - --format=$(inputs.params.FORMAT)
+      - --tls-verify=$(inputs.params.TLSVERIFY)
+      - --layers
+      - -f
+      - "$(inputs.params.DOCKERFILE)"
+      - -t
+      - "$(outputs.resources.image.url)"
+      - "$(inputs.params.CONTEXT)"
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+  - name: image-push
+    image: $(inputs.params.BUILDER_IMAGE)
+    workingDir: /workspace/source
+    command: ['buildah']
+    args:
+      - push
+      - "--tls-verify=$(inputs.params.TLSVERIFY)"
+      - "$(outputs.resources.image.url)"
+      - "docker://$(outputs.resources.image.url)"
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+  volumes:
+{{- if .Values.sonar.enabled }}
+  - name: "$(inputs.params.volumeName)"
+    configMap:
+      name: "$(inputs.params.CFGNAME)"
+{{- end }}
+  - name: varlibcontainers
+    persistentVolumeClaim:
+      claimName: container-layers-spring-rest

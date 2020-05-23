@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: {{ include "springboot-tekton.fullname" . }}-el
+spec:
+  serviceAccountName: {{ .Values.serviceAccount.name }}
+  triggers:
+  - bindings:
+    - name: {{ include "springboot-tekton.fullname" . }}-tb
+    template:
+      name: {{ include "springboot-tekton.fullname" . }}-tt

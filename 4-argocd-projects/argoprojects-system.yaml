@@ -64,25 +64,40 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: codereadyworkspaces
+  name: tekton-pipeline-devteam1
   namespace: argocd
 spec:
   destination:
-    namespace: codereadyworkspaces
+    namespace: developerteam1-cicd
     server: 'https://kubernetes.default.svc'
-  ignoreDifferences:
-  - group: org.eclipse.che
-    jsonPointers:
-    - /spec/auth/identityProviderClientId
-    - /spec/auth/identityProviderRealm
-    - /spec/auth/identityProviderImage
-    - /spec/auth/identityProviderURL
-    kind: CheCluster
   project: infra
   source:
-    path: 5-applications/codereadyworkspaces
+    path: 5-applications/cicd
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: codereadyworkspaces
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: codereadyworkspaces
+#     server: 'https://kubernetes.default.svc'
+#   ignoreDifferences:
+#   - group: org.eclipse.che
+#     jsonPointers:
+#     - /spec/auth/identityProviderClientId
+#     - /spec/auth/identityProviderRealm
+#     - /spec/auth/identityProviderImage
+#     - /spec/auth/identityProviderURL
+#     kind: CheCluster
+#   project: infra
+#   source:
+#     path: 5-applications/codereadyworkspaces
+#     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+#     targetRevision: HEAD
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application

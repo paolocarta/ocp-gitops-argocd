@@ -1,0 +1,69 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  labels:
+{{ include "springboot-tekton.labels" . | nindent 4 }}
+  name: {{ include "springboot-tekton.fullname" . }}-deploy-only-pipeline
+spec:
+  resources:
+  - name: {{ include "springboot-tekton.fullname" . }}-templates
+    type: git
+  tasks:
+  - name: deploy-to-dev
+    taskRef:
+      name: deploy
+    resources:
+      inputs:
+      - name: templates
+        resource: {{ include "springboot-tekton.fullname" . }}-templates
+    params:
+    - name: fromNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-build
+    - name: toNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-dev
+    - name: tag
+      value: latest
+    - name: imageStream
+      value: {{ include "springboot-tekton.fullname" . }}
+    - name: deployment
+      value: {{ include "springboot-tekton.fullname" . }}
+  - name: deploy-to-stage
+    taskRef:
+      name: deploy
+    resources:
+      inputs:
+      - name: templates
+        resource: {{ include "springboot-tekton.fullname" . }}-templates
+    runAfter:
+      - deploy-to-dev
+    params:
+    - name: fromNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-dev
+    - name: toNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-stage  
+    - name: tag
+      value: latest 
+    - name: imageStream
+      value: {{ include "springboot-tekton.fullname" . }} 
+    - name: deployment
+      value: {{ include "springboot-tekton.fullname" . }} 
+  - name: deploy-to-prod
+    taskRef:
+      name: deploy
+    resources:
+      inputs:
+      - name: templates
+        resource: {{ include "springboot-tekton.fullname" . }}-templates
+    runAfter:
+      - deploy-to-stage
+    params:
+    - name: fromNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-stage
+    - name: toNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-prod  
+    - name: tag
+      value: latest 
+    - name: imageStream
+      value: {{ include "springboot-tekton.fullname" . }} 
+    - name: deployment
+      value: {{ include "springboot-tekton.fullname" . }}

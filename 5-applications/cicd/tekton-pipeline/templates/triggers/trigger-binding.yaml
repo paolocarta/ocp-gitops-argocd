@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: {{ include "springboot-tekton.fullname" . }}-tb
+spec:
+  params:
+  - name: git-repo-url
+    value: $(body.repository.url)
+  - name: git-repo-name
+    value: $(body.repository.name)
+  - name: git-commit-id
+    value: $(body.head_commit.id)
+  - name: git-branch
+    value: $(body.ref)

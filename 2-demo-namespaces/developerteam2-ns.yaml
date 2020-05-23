@@ -1,4 +1,15 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: developerteam2
+  name: developerteam2-cicd
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: developerteam2-stage
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: developerteam2-prod
+

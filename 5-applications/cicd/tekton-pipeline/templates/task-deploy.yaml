@@ -1,0 +1,52 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  labels:
+{{ include "springboot-tekton.labels" . | nindent 4 }}
+  name: deploy
+spec:
+  inputs:
+    params:
+      - name: fromNamespace
+        description: The namespace we are tagging from
+      - name: toNamespace
+        description: The namespace we are tagging to
+      - name: tag
+        description: The image tag
+      - name: imageStream
+        description: The imageStream
+      - name: deployment
+        description: the deployment
+    resources:
+    - name: templates
+      type: git
+  steps:
+    - name: update-deployment-from-template
+      image: quay.io/openshift-pipeline/openshift-cli:latest
+      workingDir: /workspace/templates/manifests
+      script: |
+        #!/usr/bin/env bash
+        echo "Updating namespace $(inputs.params.toNamespace)"
+        oc process \
+          -f deployment.yml \
+          -p "APPLICATION_NAME=$(inputs.params.imageStream)" \
+          -p "NAMESPACE=$(inputs.params.toNamespace)" \
+          -p READINESS_PATH="/health" \
+          -p READINESS_RESPONSE="status.:.UP" \
+          | oc apply -f -
+    - name: tag-image
+      image: quay.io/openshift-pipeline/openshift-cli:latest
+      command: ["/usr/local/bin/oc"]
+      args:
+        - tag
+        - "$(inputs.params.fromNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
+        - "$(inputs.params.toNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
+    - name: verify-deployment
+      image: quay.io/openshift-pipeline/openshift-cli:latest
+      command: ["/usr/local/bin/oc"]
+      args:
+        - rollout
+        - status
+        - "dc/$(inputs.params.deployment)"
+        - -n
+        - "$(inputs.params.toNamespace)"

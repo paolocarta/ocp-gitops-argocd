@@ -6,7 +6,9 @@ metadata:
 spec:
   description: 'Developer Team 1'
   destinations:
-  - namespace: developerteam1
+  - namespace: developerteam1-stage
+    server: https://kubernetes.default.svc
+  - namespace: developerteam1-prod
     server: https://kubernetes.default.svc
   roles:
   - description: 'Development Team 1 Admins'
@@ -26,7 +28,9 @@ metadata:
 spec:
   description: 'Developer Team 2'
   destinations:
-  - namespace: developerteam2
+  - namespace: developerteam2-stage
+    server: https://kubernetes.default.svc
+  - namespace: developerteam2-prod
     server: https://kubernetes.default.svc
   roles:
   - description: 'Development Team 2 Admins'
