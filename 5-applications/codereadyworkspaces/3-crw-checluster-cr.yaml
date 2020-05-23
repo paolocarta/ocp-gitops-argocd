@@ -29,6 +29,6 @@ spec:
     pvcStrategy: per-workspace
     pvcClaimSize: 1Gi
     preCreateSubPaths: true
-    workspacePVCStorageClassName: 'managed-nfs-storage' 
-    postgresPVCStorageClassName: 'managed-nfs-storage'
+    workspacePVCStorageClassName: 'gp2' 
+    postgresPVCStorageClassName: 'gp2'
 
