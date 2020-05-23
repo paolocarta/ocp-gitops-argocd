@@ -2,5 +2,5 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://github.com/ekrunch/argocd-test.git
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD

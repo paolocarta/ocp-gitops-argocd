@@ -10,7 +10,7 @@ spec:
   project: demolab
   source:
     path: 5-example-data/bookinfo
-    repoURL: https://github.com/ekrunch/argocd-test.git
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
     automated:
@@ -33,7 +33,7 @@ spec:
   project: demolab
   source:
     path: 5-example-data/servicemesh
-    repoURL: https://github.com/ekrunch/argocd-test.git
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
     automated:

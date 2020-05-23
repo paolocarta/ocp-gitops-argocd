@@ -23,7 +23,7 @@ spec:
     scopes: '[groups]'
   applicationInstanceLabelKey: paolocarta.me/argoapp
   repositories: |
-    - url: https://github.com/ekrunch/argocd-test.git
+    - url: https://github.com/paolocarta/ocp-gitops-argocd.git
   server:
     enabled: true
     route: true
