@@ -10,4 +10,4 @@ There are 5 folders, numbered in the order that they will be used in this demo
 - **3-permissions** - Assigns the required permissions. The easiest way is to assign the ArgoCD Service User as a cluster admin.
   - Per namespace permissions can also be used but more permissions might be needed. 
 - **4-argocd-projects** - Creates the ArgoCD Project and Applications
-- **5-example-data** - Contains the demo files that the above projects will sync to.
+- **5-applications** - Contains the demo files that the above projects will sync to.

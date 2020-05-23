@@ -57,7 +57,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: infra
   source:
-    path: 5-example-data/amqstreams
+    path: 5-applications/amqstreams
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -80,7 +80,7 @@ spec:
     kind: CheCluster
   project: infra
   source:
-    path: 5-example-data/codereadyworkspaces
+    path: 5-applications/codereadyworkspaces
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -95,7 +95,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: operators
   source:
-    path: 5-example-data/operators
+    path: 5-applications/operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -113,7 +113,7 @@ spec:
     directory:
       jsonnet: {}
       recurse: true
-    path: 5-example-data/metering
+    path: 5-applications/metering
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -131,7 +131,7 @@ spec:
     directory:
       jsonnet: {}
       recurse: true
-    path: 5-example-data/developertools
+    path: 5-applications/developertools
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -146,7 +146,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: demoapp
   source:
-    path: 5-example-data/bookinfo
+    path: 5-applications/bookinfo
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
@@ -169,7 +169,7 @@ spec:
     kind: ServiceMeshMemberRoll
   project: infra
   source:
-    path: 5-example-data/servicemesh
+    path: 5-applications/servicemesh
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
