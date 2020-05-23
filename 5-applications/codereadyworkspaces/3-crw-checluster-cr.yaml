@@ -13,8 +13,8 @@ spec:
     selfSignedCert: false
   database:
     externalDb: false
-    chePostgresHostName: ''
-    chePostgresPort: ''
+    chePostgresHostName: 'postgres'
+    chePostgresPort: '5432'
     chePostgresUser: 'pgche'
     chePostgresPassword: 'aufPU9dP1HjV'
     chePostgresDb: ''
