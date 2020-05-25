@@ -10,3 +10,6 @@ oc policy add-role-to-user edit system:serviceaccount:argocd:argocd-application-
 oc policy add-role-to-user edit system:serviceaccount:argocd:argocd-application-controller -n openshift-metering
 oc policy add-role-to-user edit system:serviceaccount:argocd:argocd-application-controller -n openshift-nfd
 oc policy add-role-to-user edit system:serviceaccount:argocd:argocd-application-controller -n openshift-operators
+
+oc apply -f role-bindings-devteam-1.yaml
+oc apply -f role-bindings-devteam-2.yaml

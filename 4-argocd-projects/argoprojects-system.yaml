@@ -88,10 +88,11 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: cicd
   source:
-    directory:
-      helm: {}
-      recurse: true
-    path: 5-applications/cicd
+    chart: springboot-tekton
+    helm:
+      valueFiles:
+      - values.yaml
+    path: 5-applications/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 # ---
