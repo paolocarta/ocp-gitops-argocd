@@ -47,6 +47,22 @@ spec:
   - https://github.com/paolocarta/ocp-gitops-argocd.git
 ---
 apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cicd
+  namespace: argocd
+spec:
+  description: CI/CD
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+  - https://github.com/paolocarta/ocp-gitops-argocd.git
+---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: amqstreams
@@ -70,8 +86,11 @@ spec:
   destination:
     namespace: developerteam1-cicd
     server: 'https://kubernetes.default.svc'
-  project: infra
+  project: cicd
   source:
+    directory:
+      helm: {}
+      recurse: true
     path: 5-applications/cicd
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
