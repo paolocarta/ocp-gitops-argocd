@@ -95,6 +95,23 @@ spec:
     path: 5-applications/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+
+# project: cicd
+# source:
+#   repoURL: 'https://github.com/paolocarta/ocp-gitops-argocd.git'
+#   path: 5-applications/cicd/tekton-pipeline
+#   targetRevision: HEAD
+#   helm:
+#     parameters:
+#       - name: deploy.namespace.prefix
+#         value: developerteam2
+# destination:
+#   server: 'https://kubernetes.default.svc'
+#   namespace: developerteam2-cicd
+# syncPolicy:
+#   automated:
+#     selfHeal: true
+
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
