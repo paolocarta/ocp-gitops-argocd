@@ -101,7 +101,31 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
-
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tekton-pipeline-devteam2
+  namespace: argocd
+spec:
+  destination:
+    namespace: developerteam2-cicd
+    server: 'https://kubernetes.default.svc'
+  project: cicd
+  source:
+    # chart: springboot-tekton
+    helm:
+      valueFiles:
+      - values.yaml
+      parameters:
+      - name: deploy.namespace.prefix
+        value: developerteam2
+    path: 5-applications/cicd/tekton-pipeline
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
