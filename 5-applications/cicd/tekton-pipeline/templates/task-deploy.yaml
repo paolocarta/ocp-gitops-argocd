@@ -5,21 +5,26 @@ metadata:
 {{ include "springboot-tekton.labels" . | nindent 4 }}
   name: deploy
 spec:
-  inputs:
-    params:
-      - name: fromNamespace
-        description: The namespace we are tagging from
-      - name: toNamespace
-        description: The namespace we are tagging to
-      - name: tag
-        description: The image tag
-      - name: imageStream
-        description: The imageStream
-      - name: deployment
-        description: the deployment
-    resources:
-    - name: templates
-      type: git
+  params:
+    - description: The namespace we are tagging from
+      name: fromNamespace
+      type: string
+    - description: The namespace we are tagging to
+      name: toNamespace
+      type: string
+    - description: The image tag
+      name: tag
+      type: string
+    - description: The imageStream
+      name: imageStream
+      type: string
+    - description: the deployment
+      name: deployment
+      type: string
+  resources:
+    inputs:
+      - name: templates
+        type: git
   steps:
     - name: update-deployment-from-template
       image: quay.io/openshift-pipeline/openshift-cli:latest

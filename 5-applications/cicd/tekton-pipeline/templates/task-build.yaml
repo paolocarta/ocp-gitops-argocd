@@ -7,12 +7,34 @@ metadata:
 spec:
   workspaces:
   - name: maven-repo
-  inputs:
-    params:
-    - name: GOALS
+  params:
+    - default:
+        - package
       description: The Maven goals to run
+      name: GOALS
       type: array
-      default: ["package"]
+    - default: 'quay.io/buildah/stable:v1.11.0'
+      description: The location of the buildah builder image.
+      name: BUILDER_IMAGE
+      type: string
+    - default: ./Dockerfile
+      description: Path to the Dockerfile to build.
+      name: DOCKERFILE
+      type: string
+    - default: .
+      description: Path to the directory to use as context.
+      name: CONTEXT
+      type: string
+    - default: 'false'
+      description: >-
+        Verify the TLS on the registry endpoint (for push/pull to a non-TLS
+        registry)
+      name: TLSVERIFY
+      type: string
+    - default: oci
+      description: 'The format of the built container, oci or docker'
+      name: FORMAT
+      type: string
 {{- if .Values.sonar.enabled }}
     - name: volumeName
       description: The sonar-script volume
@@ -23,28 +45,13 @@ spec:
       type: string
       default: sonar
 {{- end }}
-    - name: BUILDER_IMAGE
-      description: The location of the buildah builder image.
-      default: quay.io/buildah/stable:v1.11.0
-    - name: DOCKERFILE
-      description: Path to the Dockerfile to build.
-      default: ./Dockerfile
-    - name: CONTEXT
-      description: Path to the directory to use as context.
-      default: .
-    - name: TLSVERIFY
-      description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
-      default: "false"
-    - name: FORMAT
-      description: The format of the built container, oci or docker
-      default: "oci"
-    resources:
-    - name: source
-      type: git
-  outputs:
-    resources:
-    - name: image
-      type: image
+  resources:
+    inputs:
+      - name: source
+        type: git
+    outputs:
+      - name: image
+        type: image
   steps:   
   - name: package
     image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
