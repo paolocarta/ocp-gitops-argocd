@@ -29,7 +29,7 @@ spec:
         deploymentconfig: kafka-producer
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/amqstreams/kafka-producer@sha256:7b4310af1b25e7f57769224a8fdbaf6dba6ce825ab6a9caf8378f55588ffa8b1
+      - image: image-registry.openshift-image-registry.svc:5000/amqstreams/kafka-producer:latest
         imagePullPolicy: Always
         name: kafka-producer
         ports:

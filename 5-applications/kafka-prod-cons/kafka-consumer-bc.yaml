@@ -35,6 +35,5 @@ spec:
       secret: DiSQWiKxPbScjboQFlhy
     type: Generic
   - type: ConfigChange
-  - imageChange:
-      lastTriggeredImageID: registry.access.redhat.com/openjdk/openjdk-11-rhel7@sha256:4dc1ae6af9a3efbbd28c1b765faa6fcea3f8eddccd2347ad97713d312f57b511
+  - imageChange: {}
     type: ImageChange

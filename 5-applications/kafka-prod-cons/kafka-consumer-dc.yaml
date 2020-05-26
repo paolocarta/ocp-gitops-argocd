@@ -30,7 +30,7 @@ spec:
         deploymentconfig: kafka-consumer
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/amqstreams/kafka-consumer@sha256:8b87838d019568f8043cbc7a04c280ab886274d6476fc29ea5f7052b8f95b161
+      - image: image-registry.openshift-image-registry.svc:5000/amqstreams/kafka-consumer:latest
         imagePullPolicy: Always
         name: kafka-consumer
         ports:

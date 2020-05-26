@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: infra
+  name: demoapp
   namespace: argocd
 spec:
   description: Lab Cluster
@@ -17,10 +17,10 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: operators
+  name: cicd
   namespace: argocd
 spec:
-  description: Lab Operators
+  description: CI/CD
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
@@ -33,77 +33,86 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: amqstreams
+  name: tekton-pipeline-devteam1
+  namespace: argocd
+spec:
+  destination:
+    namespace: developerteam1-cicd
+    server: 'https://kubernetes.default.svc'
+  project: cicd
+  source:
+    # chart: springboot-tekton
+    helm:
+      valueFiles:
+      - values.yaml
+      parameters:
+      - name: deploy.namespace.prefix
+        value: developerteam1
+    path: 5-applications/cicd/tekton-pipeline
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tekton-pipeline-devteam2
+  namespace: argocd
+spec:
+  destination:
+    namespace: developerteam2-cicd
+    server: 'https://kubernetes.default.svc'
+  project: cicd
+  source:
+    # chart: springboot-tekton
+    helm:
+      valueFiles:
+      - values.yaml
+      parameters:
+      - name: deploy.namespace.prefix
+        value: developerteam2
+    path: 5-applications/cicd/tekton-pipeline
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookinfo
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo
+    server: 'https://kubernetes.default.svc'
+  project: demoapp
+  source:
+    path: 5-applications/bookinfo
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-prod-cons
   namespace: argocd
 spec:
   destination:
     namespace: amqstreams
     server: 'https://kubernetes.default.svc'
-  project: infra
+  project: demoapp
   source:
-    path: 6-middleware/amqstreams
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: amqstreams-target
-  namespace: argocd
-spec:
-  destination:
-    namespace: amqstreams-target
-    server: 'https://kubernetes.default.svc'
-  project: infra
-  source:
-    path: 6-middleware/amqstreams/mirrored-cluster
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: openshift-operators
-  namespace: argocd
-spec:
-  destination:
-    namespace: openshift-operators
-    server: 'https://kubernetes.default.svc'
-  project: operators
-  source:
-    path: 7-operators
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: openshift-service-mesh
-  namespace: argocd
-spec:
-  destination:
-    namespace: istio-system
-    server: 'https://kubernetes.default.svc'
-  ignoreDifferences:
-  - group: maistra.io
-    jsonPointers:
-    - /spec/members
-    kind: ServiceMeshMemberRoll
-  project: infra
-  source:
-    path: 6-middleware/servicemesh
+    path: 5-applications/kafka-prod-cons
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
