@@ -12,8 +12,8 @@ allowHostPID: false
 allowHostPorts: false
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: false
-# allowedCapabilities: null
-# defaultAddCapabilities: null
+allowedCapabilities: {}
+defaultAddCapabilities: {}
 fsGroup:
   type: RunAsAny
 groups:
