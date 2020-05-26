@@ -46,7 +46,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: permissions
+  name: all-applications
   namespace: argocd
 spec:
   destination:
