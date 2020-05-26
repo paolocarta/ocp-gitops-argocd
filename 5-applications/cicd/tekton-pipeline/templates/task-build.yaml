@@ -98,7 +98,23 @@ spec:
     command: ["cp"]
     args:
       - /workspace/source/Dockerfile
-      - /workspace/source/upload 
+      - /workspace/source/upload
+  - name: tag-git-repo
+    image: alpine/git
+    workingDir: /workspace/source
+    command: ["git", "tag"]
+    args:
+      - 1.0.0
+  - name: tag-git-repo
+    image: alpine/git
+    workingDir: /workspace/source
+    volumeMounts:
+      name: ssh-key
+      mountPath: /root/.ssh
+    command: ["git", "push"]
+    args:
+      - origin
+      - --tags
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
@@ -111,7 +127,7 @@ spec:
       - -f
       - "$(inputs.params.DOCKERFILE)"
       - -t
-      - "$(outputs.resources.image.url)"
+      - "$(outputs.resources.image.url)":1.0.0
       - "$(inputs.params.CONTEXT)"
     volumeMounts:
     - name: varlibcontainers
@@ -141,3 +157,6 @@ spec:
   - name: varlibcontainers
     persistentVolumeClaim:
       claimName: container-layers-spring-rest
+  - name: ssh-key
+    secret:
+      secretName: tekton-pipe-ssh-key
