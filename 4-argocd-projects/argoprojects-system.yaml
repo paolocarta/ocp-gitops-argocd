@@ -84,6 +84,25 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: amqstreams-target
+  namespace: argocd
+spec:
+  destination:
+    namespace: amqstreams-target
+    server: 'https://kubernetes.default.svc'
+  project: infra
+  source:
+    path: 6-middleware/amqstreams/mirrored-cluster
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: tekton-pipeline-devteam1
   namespace: argocd
 spec:
