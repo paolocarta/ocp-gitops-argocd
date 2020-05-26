@@ -1,7 +1,0 @@
-apiVersion: apicur.io/v1alpha1
-kind: Apicurito
-metadata:
-  name: apicurito-service
-  namespace: developertools
-spec:
-  size: 1

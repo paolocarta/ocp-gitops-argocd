@@ -73,7 +73,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: infra
   source:
-    path: 5-applications/amqstreams
+    path: 6-middleware/amqstreams
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -126,29 +126,6 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: codereadyworkspaces
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: codereadyworkspaces
-#     server: 'https://kubernetes.default.svc'
-#   ignoreDifferences:
-#   - group: org.eclipse.che
-#     jsonPointers:
-#     - /spec/auth/identityProviderClientId
-#     - /spec/auth/identityProviderRealm
-#     - /spec/auth/identityProviderImage
-#     - /spec/auth/identityProviderURL
-#     kind: CheCluster
-#   project: infra
-#   source:
-#     path: 5-applications/codereadyworkspaces
-#     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-#     targetRevision: HEAD
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -161,43 +138,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: operators
   source:
-    path: 5-applications/operators
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
-# ---
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: openshift-metering
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: openshift-metering
-#     server: 'https://kubernetes.default.svc'
-#   project: infra
-#   source:
-#     directory:
-#       jsonnet: {}
-#       recurse: true
-#     path: 5-applications/metering
-#     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-#     targetRevision: HEAD
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: developertools
-  namespace: argocd
-spec:
-  destination:
-    namespace: developertools
-    server: 'https://kubernetes.default.svc'
-  project: infra
-  source:
-    directory:
-      jsonnet: {}
-      recurse: true
-    path: 5-applications/developertools
+    path: 7-operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
 ---
@@ -235,7 +176,7 @@ spec:
     kind: ServiceMeshMemberRoll
   project: infra
   source:
-    path: 5-applications/servicemesh
+    path: 6-middleware/servicemesh
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
