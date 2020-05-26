@@ -2,7 +2,9 @@ kind: Group
 apiVersion: user.openshift.io/v1
 metadata:
   name: argocd-users
-users: null
+users: 
+  - user1
+  - user3
 ---
 kind: Group
 apiVersion: user.openshift.io/v1
