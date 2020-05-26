@@ -4,6 +4,7 @@ metadata:
   name: demolab-argocd
   namespace: argocd
 spec:
+  # version: v1.5.2
   ha:
     enabled: true
   dex:
@@ -29,3 +30,13 @@ spec:
   server:
     enabled: true
     route: true
+    autoscale:
+      enabled: true
+      hpa:
+        maxReplicas: 3
+        minReplicas: 2
+        scaleTargetRef:
+          apiVersion: extensions/v1beta1
+          kind: Deployment
+          name: demolab-argocd-server
+        targetCPUUtilizationPercentage: 50
