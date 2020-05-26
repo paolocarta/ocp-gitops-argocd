@@ -1,7 +1,8 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-    generateName: cluster-admin-
+  name: cluster-admin-argocd
+    # generateName: cluster-admin-argocd
 subjects:
   - kind: ServiceAccount
     name: argocd-application-controller

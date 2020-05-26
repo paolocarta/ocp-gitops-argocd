@@ -2,8 +2,9 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: "argocd-operator"
-  namespace: "argocd" 
-  olm.operatorGroup: argocd
+  namespace: "argocd"
+  annotations: 
+    olm.operatorGroup: argocd
 spec:
   channel: "alpha" 
   installPlanApproval: "Automatic"
@@ -15,8 +16,9 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: "prometheus"
-  namespace: "argocd" 
-  olm.operatorGroup: argocd
+  namespace: "argocd"
+  annotations: 
+    olm.operatorGroup: argocd
 spec:
   channel: "beta" 
   installPlanApproval: "Automatic"
