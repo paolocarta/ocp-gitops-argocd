@@ -12,3 +12,7 @@ spec:
     path: 1-argocd-installation-manual-steps
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
