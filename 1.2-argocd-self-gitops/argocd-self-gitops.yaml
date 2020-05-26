@@ -9,6 +9,6 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: 1-argo-cd-installation-manual-steps
+    path: 1-argocd-installation-manual-steps
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
