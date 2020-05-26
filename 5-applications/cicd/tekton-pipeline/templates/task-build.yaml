@@ -106,14 +106,15 @@ spec:
     args:
       - "tag"
       - "1.0.0"
-  - name: tag-git-repo
+  - name: push-git-tag
     image: alpine/git
     workingDir: /workspace/source
     volumeMounts:
       name: ssh-key
       mountPath: /root/.ssh
-    command: ["git", "push"]
+    command: ["git"]
     args:
+      - push
       - origin
       - --tags
   - name: build-image
