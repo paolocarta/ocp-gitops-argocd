@@ -110,8 +110,8 @@ spec:
     image: alpine/git
     workingDir: /workspace/source
     volumeMounts:
-      name: ssh-key
-      mountPath: /root/.ssh
+      - name: ssh-key
+        mountPath: /root/.ssh
     command: ["git"]
     args:
       - push
