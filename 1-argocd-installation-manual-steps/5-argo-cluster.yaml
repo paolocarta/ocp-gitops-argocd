@@ -4,6 +4,8 @@ metadata:
   name: demolab-argocd
   namespace: argocd
 spec:
+  ha:
+    enabled: true
   dex:
     image: quay.io/redhat-cop/dex
     version: v2.22.0-openshift
