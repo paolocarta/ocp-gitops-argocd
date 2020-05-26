@@ -76,6 +76,10 @@ spec:
     path: 6-middleware/amqstreams
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -100,6 +104,7 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
+      prune: true
       selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -125,6 +130,7 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
+      prune: true
       selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -141,6 +147,10 @@ spec:
     path: 7-operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -158,6 +168,7 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
+      prune: true
       selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -181,4 +192,5 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
+      prune: true
       selfHeal: true
