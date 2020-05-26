@@ -102,9 +102,10 @@ spec:
   - name: tag-git-repo
     image: alpine/git
     workingDir: /workspace/source
-    command: ["git", "tag"]
+    command: ["git"]
     args:
-      - 1.0.0
+      - "tag"
+      - "1.0.0"
   - name: tag-git-repo
     image: alpine/git
     workingDir: /workspace/source
@@ -127,7 +128,7 @@ spec:
       - -f
       - "$(inputs.params.DOCKERFILE)"
       - -t
-      - "$(outputs.resources.image.url)":1.0.0
+      - "$(outputs.resources.image.url):1.0.0"
       - "$(inputs.params.CONTEXT)"
     volumeMounts:
     - name: varlibcontainers
