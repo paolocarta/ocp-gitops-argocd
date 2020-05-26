@@ -11,3 +11,5 @@ sleep 30
 
 oc apply -f 5-argo-cluster.yaml
 oc apply -f 6-argocd-cluster-admin.yaml
+oc apply -f 7-security-contraint.yaml
+
