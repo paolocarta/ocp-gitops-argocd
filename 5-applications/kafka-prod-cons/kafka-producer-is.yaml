@@ -1,0 +1,18 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: kafka-producer
+    app.kubernetes.io/component: kafka-producer
+    app.kubernetes.io/instance: kafka-producer
+  name: kafka-producer
+  selfLink: /apis/image.openshift.io/v1/namespaces/kafka-playground/imagestreams/kafka-producer
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: image-registry.openshift-image-registry.svc:5000/kafka-producer

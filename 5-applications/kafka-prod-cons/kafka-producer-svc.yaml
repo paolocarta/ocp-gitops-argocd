@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  labels:
+    app: kafka-producer
+    app.kubernetes.io/component: kafka-producer
+    app.kubernetes.io/instance: kafka-producer
+  name: kafka-producer
+  selfLink: /api/v1/namespaces/kafka-playground/services/kafka-producer
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 8443-tcp
+    port: 8443
+    protocol: TCP
+    targetPort: 8443
+  - name: 8778-tcp
+    port: 8778
+    protocol: TCP
+    targetPort: 8778
+  selector:
+    deploymentconfig: kafka-producer
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,47 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  labels:
+    app: kafka-consumer
+    app.kubernetes.io/component: kafka-consumer
+    app.kubernetes.io/instance: kafka-consumer
+  name: kafka-consumer
+  selfLink: /apis/build.openshift.io/v1/namespaces/kafka-playground/buildconfigs/kafka-consumer
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: kafka-consumer:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/paolocarta/kafka-consumer-spring-cloud-stream.git
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: openjdk-11-rhel7:latest
+        namespace: kafka-playground
+    type: Source
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - github:
+      secret: B1P6d8CIq6j1KvzB_m8E
+    type: GitHub
+  - generic:
+      secret: DiSQWiKxPbScjboQFlhy
+    type: Generic
+  - type: ConfigChange
+  - imageChange:
+      lastTriggeredImageID: registry.access.redhat.com/openjdk/openjdk-11-rhel7@sha256:4dc1ae6af9a3efbbd28c1b765faa6fcea3f8eddccd2347ad97713d312f57b511
+    type: ImageChange
+status:
+  lastVersion: 3

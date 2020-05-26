@@ -1,0 +1,18 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: kafka-consumer
+    app.kubernetes.io/component: kafka-consumer
+    app.kubernetes.io/instance: kafka-consumer
+  name: kafka-consumer
+  selfLink: /apis/image.openshift.io/v1/namespaces/kafka-playground/imagestreams/kafka-consumer
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: image-registry.openshift-image-registry.svc:5000/kafka-consumer

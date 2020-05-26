@@ -1,0 +1,74 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: kafka-consumer
+    app.kubernetes.io/component: kafka-consumer
+    app.kubernetes.io/instance: kafka-consumer
+  name: kafka-consumer
+  selfLink: /apis/apps.openshift.io/v1/namespaces/kafka-playground/deploymentconfigs/kafka-consumer
+spec:
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: kafka-consumer
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deploymentconfig: kafka-consumer
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/kafka-playground/kafka-consumer@sha256:8b87838d019568f8043cbc7a04c280ab886274d6476fc29ea5f7052b8f95b161
+        imagePullPolicy: Always
+        name: kafka-consumer
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        - containerPort: 8778
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - kafka-consumer
+      from:
+        kind: ImageStreamTag
+        name: kafka-consumer:latest
+        namespace: kafka-playground
+    type: ImageChange
+status:
+  availableReplicas: 0
+  latestVersion: 0
+  observedGeneration: 0
+  replicas: 0
+  unavailableReplicas: 0
+  updatedReplicas: 0
