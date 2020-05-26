@@ -1,15 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-  creationTimestamp: null
   labels:
     app: kafka-producer
     app.kubernetes.io/component: kafka-producer
     app.kubernetes.io/instance: kafka-producer
   name: kafka-producer
-  selfLink: /api/v1/namespaces/kafka-playground/services/kafka-producer
 spec:
   ports:
   - name: 8080-tcp
@@ -28,5 +24,3 @@ spec:
     deploymentconfig: kafka-producer
   sessionAffinity: None
   type: ClusterIP
-status:
-  loadBalancer: {}

@@ -1,15 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-  creationTimestamp: null
   labels:
     app: kafka-consumer
     app.kubernetes.io/component: kafka-consumer
     app.kubernetes.io/instance: kafka-consumer
   name: kafka-consumer
-  selfLink: /api/v1/namespaces/kafka-playground/services/kafka-consumer
 spec:
   ports:
   - name: 8080-tcp

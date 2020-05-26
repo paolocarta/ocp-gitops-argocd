@@ -5,8 +5,8 @@
 # spec:
 #   replicas: 3
 #   consumer:
-#     bootstrapServers: my-cluster-kafka-bootstrap.kafka-playground.svc:9092
+#     bootstrapServers: my-cluster-kafka-bootstrap.amqstreams.svc:9092
 #     groupId: my-source-group-id
 #   producer:
-#     bootstrapServers: my-target-cluster-kafka-bootstrap.kafka-target.svc:9092
+#     bootstrapServers: my-target-cluster-kafka-bootstrap.amqstreams-target.svc:9092
 #   whitelist: ".*"

@@ -1,15 +1,11 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-  creationTimestamp: null
   labels:
     app: kafka-producer
     app.kubernetes.io/component: kafka-producer
     app.kubernetes.io/instance: kafka-producer
   name: kafka-producer
-  selfLink: /apis/build.openshift.io/v1/namespaces/kafka-playground/buildconfigs/kafka-producer
 spec:
   failedBuildsHistoryLimit: 5
   nodeSelector: null
@@ -29,7 +25,7 @@ spec:
       from:
         kind: ImageStreamTag
         name: openjdk-11-rhel7:latest
-        namespace: kafka-playground
+        namespace: amqstreams
     type: Source
   successfulBuildsHistoryLimit: 5
   triggers:

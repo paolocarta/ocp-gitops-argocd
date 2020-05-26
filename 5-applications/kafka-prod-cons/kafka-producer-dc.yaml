@@ -1,16 +1,11 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  annotations:
-    openshift.io/generated-by: OpenShiftNewApp
-  creationTimestamp: null
-  generation: 1
   labels:
     app: kafka-producer
     app.kubernetes.io/component: kafka-producer
     app.kubernetes.io/instance: kafka-producer
   name: kafka-producer
-  selfLink: /apis/apps.openshift.io/v1/namespaces/kafka-playground/deploymentconfigs/kafka-producer
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -30,12 +25,11 @@ spec:
     metadata:
       annotations:
         openshift.io/generated-by: OpenShiftNewApp
-      creationTimestamp: null
       labels:
         deploymentconfig: kafka-producer
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/kafka-playground/kafka-producer@sha256:7b4310af1b25e7f57769224a8fdbaf6dba6ce825ab6a9caf8378f55588ffa8b1
+      - image: image-registry.openshift-image-registry.svc:5000/amqstreams/kafka-producer@sha256:7b4310af1b25e7f57769224a8fdbaf6dba6ce825ab6a9caf8378f55588ffa8b1
         imagePullPolicy: Always
         name: kafka-producer
         ports:
@@ -63,12 +57,5 @@ spec:
       from:
         kind: ImageStreamTag
         name: kafka-producer:latest
-        namespace: kafka-playground
+        namespace: amqstreams
     type: ImageChange
-status:
-  availableReplicas: 0
-  latestVersion: 0
-  observedGeneration: 0
-  replicas: 0
-  unavailableReplicas: 0
-  updatedReplicas: 0

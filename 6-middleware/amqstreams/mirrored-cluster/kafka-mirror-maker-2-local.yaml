@@ -7,9 +7,9 @@ spec:
   connectCluster: "my-cluster-target"
   clusters:
     - alias: "my-cluster-source"
-      bootstrapServers: my-cluster-kafka-bootstrap.kafka-playground.svc:9092
+      bootstrapServers: my-cluster-kafka-bootstrap.amqstreams.svc:9092
     - alias: "my-cluster-target"
-      bootstrapServers: my-target-cluster-kafka-bootstrap.kafka-target.svc:9092
+      bootstrapServers: my-target-cluster-kafka-bootstrap.amqstreams-target.svc:9092
   mirrors:
     - sourceCluster: "my-cluster-source"
       targetCluster: "my-cluster-target"
