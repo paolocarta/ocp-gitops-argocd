@@ -57,7 +57,7 @@ spec:
     image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
     workingDir: /workspace/source
     command:
-    - {{ .Values.maven.command }}
+    - /usr/bin/mvn
     args:
     - -Dmaven.repo.local=$(workspaces.maven-repo.path)
     - "$(inputs.params.GOALS)"
@@ -66,7 +66,7 @@ spec:
     image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
     workingDir: /workspace/source
     command:
-    - {{ .Values.maven.command }}
+    - /usr/bin/mvn
     args:
     - -Dmaven.repo.local=$(workspaces.maven-repo.path)
     - -Dsonar.host.url={{ .Values.sonar.url }}
