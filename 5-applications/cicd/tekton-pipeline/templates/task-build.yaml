@@ -100,23 +100,23 @@ spec:
       - /workspace/source/Dockerfile
       - /workspace/source/upload
   - name: tag-git-repo
-    image: alpine/git
+    image: clamer/kikd:1.0.0
     workingDir: /workspace/source
     command: ["git"]
     args:
       - "tag"
       - "1.0.0"
   - name: push-git-tag
-    image: alpine/git
+    image: clamer/kikd:1.0.0
     workingDir: /workspace/source
     volumeMounts:
       - name: ssh-key
         mountPath: /root/.ssh
-    command: ["git"]
+    command: ["/bin/bash"]
     args:
-      - push
-      - origin
-      - --tags
+      - -c
+      - eval $(ssh-agent -s) && ssh-add ~/.ssh/git-private-key &&
+      - git push origin --tags
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload

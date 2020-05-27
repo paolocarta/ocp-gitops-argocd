@@ -1,0 +1,1 @@
+oc create secret generic tekton-pipe-ssh-key --from-file=git-private-key=ssh/git-private-key
