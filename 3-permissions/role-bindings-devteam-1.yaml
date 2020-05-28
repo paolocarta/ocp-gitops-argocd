@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pipeline_edit
+  name: pipeline_edit-stage
   namespace: developerteam1-stage
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -15,7 +15,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pipeline_edit
+  name: pipeline_edit-prod
   namespace: developerteam1-prod
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -29,7 +29,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pipeline_edit-with-key
+  name: pipeline_edit-with-key-stage
   namespace: developerteam1-stage
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -43,7 +43,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: pipeline_edit-with-key
+  name: pipeline_edit-with-key-prod
   namespace: developerteam1-prod
 roleRef:
   apiGroup: rbac.authorization.k8s.io
