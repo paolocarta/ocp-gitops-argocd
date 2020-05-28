@@ -14,7 +14,7 @@ fullnameOverride: "basic-spring-boot"
 
 ## This serviceaccount is created by the OpenShift pipeline operator
 serviceAccount:
-  name: pipeline
+  name: pipeline-with-keys
 
 imagestream:
   name: redhat-openjdk18-openshift:1.5
