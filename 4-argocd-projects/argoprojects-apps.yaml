@@ -48,7 +48,7 @@ spec:
       parameters:
       - name: deploy.namespace.prefix
         value: developerteam1
-    path: 5-applications/cicd/tekton-pipeline
+    path: 5-applications/spring-rest/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
@@ -74,7 +74,7 @@ spec:
       parameters:
       - name: deploy.namespace.prefix
         value: developerteam2
-    path: 5-applications/cicd/tekton-pipeline
+    path: 5-applications/spring-rest/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
