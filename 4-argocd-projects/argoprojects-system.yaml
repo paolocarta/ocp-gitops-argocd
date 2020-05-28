@@ -110,3 +110,22 @@ spec:
     automated:
       prune: true
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift-sealed-secrets
+  namespace: argocd
+spec:
+  destination:
+    namespace: sealed-secrets
+    server: 'https://kubernetes.default.svc'
+  project: infra
+  source:
+    path: 6-middleware
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
