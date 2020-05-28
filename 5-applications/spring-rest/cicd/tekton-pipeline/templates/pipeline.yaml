@@ -30,6 +30,20 @@ spec:
     - name: maven-repo
       workspace: local-maven-repo
   ####
+
+    #   - name: push-to-git
+    #   taskRef:
+    #     name: some-git-task # pushes to the Git repository used by the application in the next task
+    # - name: sync-application
+    #   taskRef:
+    #     name: argocd-task-sync-and-wait
+    #   params:
+    #     - name: application-name
+    #       value: some-application
+    #     - name: flags
+    #       value: --insecure # needed in this example only because the Argo CD server is locally hosted
+
+  ####
   - name: deploy-to-stage
     taskRef:
       name: deploy
