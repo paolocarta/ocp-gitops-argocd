@@ -3,14 +3,14 @@ kind: ConfigMap
 metadata:
   name: argocd-env-configmap
 data:
-  ARGOCD_SERVER: <Argo CD server address>
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: argocd-env-secret
-data:
-  # choose one of username/password or auth token
-  ARGOCD_USERNAME: <username>
-  ARGOCD_PASSWORD: <password>
-  ARGOCD_AUTH_TOKEN: <token>
+  ARGOCD_SERVER: server-address
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: argocd-env-secret
+# data:
+#   # choose one of username/password or auth token
+#   ARGOCD_USERNAME: <username>
+#   ARGOCD_PASSWORD: <password>
+#   ARGOCD_AUTH_TOKEN: <token>

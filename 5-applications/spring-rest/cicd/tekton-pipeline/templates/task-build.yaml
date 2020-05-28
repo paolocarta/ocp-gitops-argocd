@@ -99,26 +99,13 @@ spec:
     args:
       - /workspace/source/Dockerfile
       - /workspace/source/upload
-  - name: tag-git-repo
-    image: clamer/kikd:1.0.1
-    workingDir: /workspace/source
-    command: ["git"]
-    args:
-      - "tag"
-      - "1.0.0"
-  - name: push-git-tag
-    image: clamer/kikd:1.0.1
-    workingDir: /workspace/source
-    volumeMounts:
-      - name: ssh-key
-        mountPath: /root/.ssh
-    command: ["/bin/bash"]
-    args:
-      - -c
-      - eval $(ssh-agent -s) && ssh-add ~/.ssh/git-private-key &&
-      - git push origin --tags
-    securityContext:
-      fsGroup: podfsgroup
+  # - name: tag-git-repo
+  #   image: clamer/kikd:1.0.1
+  #   workingDir: /workspace/source
+  #   command: ["git"]
+  #   args:
+  #     - "tag"
+  #     - "1.0.0"
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
