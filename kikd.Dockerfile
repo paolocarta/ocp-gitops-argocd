@@ -40,17 +40,21 @@ RUN yum update  -y && \
 ENV PATH /usr/local/git/bin:$PATH
 
 ENV HELM3_VERSION 3.0.3
-ENV JX_RELEASE_VERSION 1.0.24
-
 # helm3
 RUN curl -L https://get.helm.sh/helm-v${HELM3_VERSION}-linux-amd64.tar.gz | tar xzv && \
   mv linux-amd64/helm /usr/bin/helm && \
   rm -rf linux-amd64 && \
   mkdir /usr/bin/helm-bin && \
   ln -s /usr/bin/helm /usr/bin/helm-bin/helm
+
+ENV JX_RELEASE_VERSION 1.0.17
+
 # jx-release-version
-RUN curl -f -o ./jx-release-version -L https://github.com/jenkins-x/jx-release-version/releases/download/v${JX_RELEASE_VERSION}/jx-release-version_${JX_RELEASE_VERSION}_linux_amd64.tar.gz && \
+RUN curl -f -o ./jx-release-version -L https://github.com/jenkins-x/jx-release-version/releases/download/v${JX_RELEASE_VERSION}/jx-release-version-linux && \
   mv jx-release-version /usr/bin/ && \
   chmod +x /usr/bin/jx-release-version
+
+# RUN groupadd podfsgroup && useradd defaultuser && usermod -a -G podfsgroup defaultuser
+# USER defaultuser
 
 CMD ["jx-release-version"]
