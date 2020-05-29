@@ -16,9 +16,9 @@ spec:
     type: image
   ####
   tasks:
-  - name: maven-build-binary-build
+  - name: maven-build-image-build
     taskRef: 
-      name: maven-build-binary-build
+      name: maven-build-image-build
     resources:
       inputs:
       - name: source
@@ -30,20 +30,6 @@ spec:
     - name: maven-repo
       workspace: local-maven-repo
   ####
-
-    #   - name: push-to-git
-    #   taskRef:
-    #     name: some-git-task # pushes to the Git repository used by the application in the next task
-    # - name: sync-application
-    #   taskRef:
-    #     name: argocd-task-sync-and-wait
-    #   params:
-    #     - name: application-name
-    #       value: some-application
-    #     - name: flags
-    #       value: --insecure # needed in this example only because the Argo CD server is locally hosted
-
-  ####
   - name: deploy-to-stage
     taskRef:
       name: deploy
@@ -52,12 +38,12 @@ spec:
       - name: templates
         resource: {{ include "springboot-tekton.fullname" . }}-templates
     runAfter:
-      - maven-build-binary-build
+      - maven-build-image-build
     params:
     - name: fromNamespace
       value: {{ .Values.deploy.namespace.prefix }}-cicd
     - name: toNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-stage  
+      value: {{ .Values.deploy.namespace.prefix }}-stage
     - name: tag
       value: latest 
     - name: imageStream
@@ -65,28 +51,28 @@ spec:
     - name: deployment
       value: {{ include "springboot-tekton.fullname" . }} 
   ####
-  - name: deploy-to-prod
-    taskRef:
-      name: deploy
-    # conditions:
-    #   - conditionRef: "verify-no-file-exists-without-resource"
-    #     params:
-    #       - name: "path"
-    #         value: "$(params.path)"
-    resources:
-      inputs:
-      - name: templates
-        resource: {{ include "springboot-tekton.fullname" . }}-templates
-    runAfter:
-      - deploy-to-stage
-    params:
-    - name: fromNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-stage
-    - name: toNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-prod  
-    - name: tag
-      value: latest 
-    - name: imageStream
-      value: {{ include "springboot-tekton.fullname" . }} 
-    - name: deployment
-      value: {{ include "springboot-tekton.fullname" . }}
+  # - name: deploy-to-prod
+  #   taskRef:
+  #     name: deploy
+  #   # conditions:
+  #   #   - conditionRef: "verify"
+  #   #     params:
+  #   #       - name: "path"
+  #   #         value: "$(params.path)"
+  #   resources:
+  #     inputs:
+  #     - name: templates
+  #       resource: {{ include "springboot-tekton.fullname" . }}-templates
+  #   runAfter:
+  #     - deploy-to-stage
+  #   params:
+  #   - name: fromNamespace
+  #     value: {{ .Values.deploy.namespace.prefix }}-stage
+  #   - name: toNamespace
+  #     value: {{ .Values.deploy.namespace.prefix }}-prod 
+  #   - name: tag
+  #     value: latest 
+  #   - name: imageStream
+  #     value: {{ include "springboot-tekton.fullname" . }} 
+  #   - name: deployment
+  #     value: {{ include "springboot-tekton.fullname" . }}

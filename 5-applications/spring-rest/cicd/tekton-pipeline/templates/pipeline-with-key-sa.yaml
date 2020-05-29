@@ -3,4 +3,4 @@ kind: ServiceAccount
 metadata:
   name: pipeline-with-keys
 secrets:
-  - name: ssh-key
+  - name: ssh-privatekey
