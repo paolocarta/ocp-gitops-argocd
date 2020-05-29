@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  labels:
+    app: basic-spring-boot
+  name: basic-spring-boot
+  namespace: developerteam1-stage
+spec:
+  replicas: 2
+  selector:
+    deploymentConfig: basic-spring-boot
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: basic-spring-boot
+        deploymentConfig: basic-spring-boot
+      name: basic-spring-boot
+    spec:
+      containers:
+        - name: basic-spring-boot
+        # - env:
+        #   - name: JWS_ADMIN_USERNAME
+        #     value: ${JWS_ADMIN_USERNAME}
+        #   - name: JWS_ADMIN_PASSWORD
+        #     value: ${JWS_ADMIN_PASSWORD}
+          image: basic-spring-boot
+          # imagePullPolicy: Always
+          resources:
+            requests:
+              cpu:
+          ports:
+          - containerPort: 8778
+            name: jolokia
+            protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - curl -s 'http://localhost:8080/'
