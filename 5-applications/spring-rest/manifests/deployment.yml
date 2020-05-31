@@ -29,7 +29,11 @@ spec:
           # imagePullPolicy: Always
           resources:
             requests:
-              cpu:
+              cpu: 300m
+              memory: 400Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
           ports:
           - containerPort: 8778
             name: jolokia
