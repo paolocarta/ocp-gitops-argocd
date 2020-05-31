@@ -1,2 +1,4 @@
 
 ssh/git-private-key
+
+5-applications/spring-rest/cicd/tekton-pipeline/pipeline-secret.yaml
