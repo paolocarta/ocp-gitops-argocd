@@ -46,6 +46,6 @@ spec:
       kinds:
       - PipelineRun
       - TaskRun
-      - PipelineResources
+      - PipelineResource
       clusters:
       - "*.local"
