@@ -6,7 +6,7 @@ spec:
   type: git
   params:
   - name: url
-    value: https://github.com/paolocarta/spring-rest-tekton-pipeline
+    value: git@github.com:paolocarta/spring-rest-tekton-pipeline.git
   - name: revision
     value: master
 ---
@@ -18,6 +18,6 @@ spec:
   type: git
   params:
   - name: url
-    value: https://github.com/paolocarta/spring-rest-tekton-pipeline
+    value: git@github.com:paolocarta/spring-rest-tekton-pipeline.git
   - name: revision
     value: master
