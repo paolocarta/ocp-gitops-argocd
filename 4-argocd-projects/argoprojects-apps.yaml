@@ -51,6 +51,11 @@ spec:
     path: 5-applications/spring-rest/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
+  ignoreDifferences:
+  - group: tekton.dev
+    kind: PipelineRun
+    # jsonPointers:
+    # - /spec/...
   syncPolicy:
     automated:
       prune: true
