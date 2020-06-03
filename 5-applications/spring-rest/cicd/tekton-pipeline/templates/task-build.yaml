@@ -113,27 +113,22 @@ spec:
     args:
       - "-c"
       - "git tag $(cat /tekton/home/version)"
-  - name: push-git-tag
-    image: clamer/kikd:1.0.2
-    workingDir: /workspace/source
-    command: ["/bin/bash"]
-    args:
-      - -c
-      - "cp -r /tekton/home/.ssh /root/ && git push origin --tags"
+  # - name: push-git-tag
+  #   image: clamer/kikd:1.0.2
+  #   workingDir: /workspace/source
+  #   command: ["/bin/bash"]
+  #   args:
+  #     - -c
+  #     - "cp -r /tekton/home/.ssh /root/ && git push origin --tags"
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
-    command: ['buildah']
-    args:
-      - bud
-      - --format=$(inputs.params.FORMAT)
-      - --tls-verify=$(inputs.params.TLSVERIFY)
-      - --layers
-      - -f
-      - "$(inputs.params.DOCKERFILE)"
-      - -t
-      - "$(outputs.resources.image.url):$(cat /tekton/home/version)"
-      - "$(inputs.params.CONTEXT)"
+    # command: ['']
+    script: |
+      buildah bud --format=$(inputs.params.FORMAT) \
+      --tls-verify=$(inputs.params.TLSVERIFY) --layers \
+      -f "$(inputs.params.DOCKERFILE)" -t "$(outputs.resources.image.url)":"$(cat /tekton/home/version)" \
+      "$(inputs.params.CONTEXT)"
     volumeMounts:
     - name: varlibcontainers
       mountPath: /var/lib/containers
