@@ -140,7 +140,8 @@ spec:
     # command: ['buildah']
     script: |
       buildah push --tls-verify=$(inputs.params.TLSVERIFY) \
-      "$(outputs.resources.image.url)":"$(cat /tekton/home/version)" "docker://$(outputs.resources.image.url)"
+      "$(outputs.resources.image.url)":"$(cat /tekton/home/version)" \
+      "docker://$(outputs.resources.image.url)":"$(cat /tekton/home/version)"
     volumeMounts:
     - name: varlibcontainers
       mountPath: /var/lib/containers
