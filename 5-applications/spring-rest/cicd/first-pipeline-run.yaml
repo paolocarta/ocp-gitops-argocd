@@ -15,7 +15,7 @@ spec:
   - name: basic-spring-boot-image
     resourceRef:
       name: basic-spring-boot-image
-  serviceAccountName: pipeline
+  serviceAccountName: pipeline-with-keys
   workspaces:
   - name: local-maven-repo
     persistentVolumeClaim:
