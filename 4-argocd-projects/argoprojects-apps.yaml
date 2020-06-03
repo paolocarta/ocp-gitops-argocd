@@ -58,6 +58,7 @@ spec:
     # namespace: developerteam1-cicd
     jsonPointers:
     - /spec
+    - /metadata
   syncPolicy:
     automated:
       prune: true
