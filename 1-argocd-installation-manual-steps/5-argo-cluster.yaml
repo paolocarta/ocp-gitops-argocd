@@ -40,3 +40,12 @@ spec:
           kind: Deployment
           name: demolab-argocd-server
         targetCPUUtilizationPercentage: 50
+  resourceExclusions: |
+    - apiGroups:
+      - tekton.dev
+      kinds:
+      - PipelineRun
+      - TaskRun
+      - PipelineResources
+      clusters:
+      - "*.local"

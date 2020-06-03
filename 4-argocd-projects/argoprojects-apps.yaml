@@ -56,8 +56,8 @@ spec:
     kind: PipelineRun
     # name: basic-spring-boot-first-pipe-run
     # namespace: developerteam1-cicd
-    # jsonPointers:
-    # - /spec
+    jsonPointers:
+    - /spec
   syncPolicy:
     automated:
       prune: true
