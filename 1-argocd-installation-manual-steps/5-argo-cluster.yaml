@@ -48,4 +48,4 @@ spec:
       - TaskRun
       - PipelineResource
       clusters:
-      - "*.local"
+      - "https://kubernetes.default.svc"
