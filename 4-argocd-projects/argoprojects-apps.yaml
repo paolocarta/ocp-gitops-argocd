@@ -54,8 +54,10 @@ spec:
   ignoreDifferences:
   - group: tekton.dev
     kind: PipelineRun
-    # jsonPointers:
-    # - /spec/...
+    # name: basic-spring-boot-first-pipe-run
+    # namespace: developerteam1-cicd
+    jsonPointers:
+    - /spec
   syncPolicy:
     automated:
       prune: true
