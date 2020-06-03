@@ -13,3 +13,10 @@ oc apply -f 5-argo-cluster.yaml
 oc apply -f 6-argocd-cluster-admin.yaml
 oc apply -f 7-security-contraint.yaml
 
+sleep 50
+
+cd ../1.2-argocd-self-gitops
+
+oc apply -f 1-argocd-self-gitops.yaml
+oc apply -f 2-cluster-bootstrap-wrapper.yaml
+
