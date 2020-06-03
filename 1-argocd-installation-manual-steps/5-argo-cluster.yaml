@@ -46,6 +46,5 @@ spec:
       kinds:
       - PipelineRun
       - TaskRun
-      - PipelineResource
       clusters:
       - "https://kubernetes.default.svc"
