@@ -13,7 +13,7 @@ spec:
       description: The Maven goals to run
       name: GOALS
       type: array
-    - default: 'quay.io/buildah/stable:v1.11.0'
+    - default: 'quay.io/buildah/stable:v1.14.8'
       description: The location of the buildah builder image.
       name: BUILDER_IMAGE
       type: string
@@ -123,10 +123,8 @@ spec:
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
-    command: ['/bin/bash']
+    command: ['buildah']
     args:
-      - -c
-      - buildah
       - bud
       - --format=$(inputs.params.FORMAT)
       - --tls-verify=$(inputs.params.TLSVERIFY)
