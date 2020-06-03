@@ -15,22 +15,6 @@ spec:
   - https://github.com/paolocarta/ocp-gitops-argocd.git
 ---
 apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: operators
-  namespace: argocd
-spec:
-  description: Lab Operators
-  clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-  destinations:
-    - namespace: '*'
-      server: '*'
-  sourceRepos:
-  - https://github.com/paolocarta/ocp-gitops-argocd.git
----
-apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: amqstreams
@@ -61,25 +45,6 @@ spec:
   project: infra
   source:
     path: 6-middleware/amqstreams/mirrored-cluster
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: openshift-operators
-  namespace: argocd
-spec:
-  destination:
-    namespace: openshift-operators
-    server: 'https://kubernetes.default.svc'
-  project: operators
-  source:
-    path: 7-operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: HEAD
   syncPolicy:
