@@ -12,6 +12,7 @@ spec:
     - name: GOALS
       default:
         - package
+        - -DskipTests
       description: The Maven goals to run
       type: array
     - name: BUILDER_IMAGE
@@ -110,6 +111,7 @@ spec:
 
   - name: new-version
     image: clamer/kikd:1.0.2
+    imagePullPolicy: Always
     workingDir: /workspace/source
     script: |
       cp -r /tekton/home/.ssh /root/ && \
