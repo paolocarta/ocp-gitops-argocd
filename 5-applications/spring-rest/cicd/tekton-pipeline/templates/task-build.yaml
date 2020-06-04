@@ -114,7 +114,8 @@ spec:
     script: |
       cp -r /tekton/home/.ssh /root/ && \
       git fetch --tags && jx-release-version > /workspace/output-area/version && \
-      cat /workspace/output-area/version
+      whoami
+      # cat /workspace/output-area/version
 
   - name: tag-git-repo
     image: clamer/kikd:1.0.2

@@ -32,13 +32,6 @@ spec:
         "spec.template.spec.containers[0].image" \
         {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
 
-  - name: ls
-    image: clamer/kikd:1.0.2
-    workingDir: /workspace/gitops-repo
-    # command: ["/bin/bash"]
-    script: |
-      ls /tekton/home/.ssh
-
   - name: whoami
     image: clamer/kikd:1.0.2
     workingDir: /workspace/gitops-repo
