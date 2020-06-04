@@ -35,10 +35,13 @@ spec:
   - name: git-commit-repo
     image: clamer/kikd:1.0.2
     workingDir: /workspace/gitops-repo
-    command: ["/bin/bash"]
-    args:
-      - "-c"
-      - "git commit -am 'msg'"
+    # command: ["/bin/bash"]
+    script: |
+      cp -r /tekton/home/.ssh /root/ && \
+      git commit -am 'msg' 
+
+  #   git config --global user.email "you@example.com"
+  # git config --global user.name "Your Name"
 
   # - name: git-push-repo
   #   image: clamer/kikd:1.0.2
