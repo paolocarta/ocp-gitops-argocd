@@ -38,9 +38,10 @@ spec:
     securityContext:
       privileged: true
     script: |
-      whoami
+      cp -r /tekton/home/.ssh /root/ && \
+      git commit -am 'msg' 
+
       
-#git commit -am 'msg' 
 
   #   git config --global user.email "you@example.com"
   # git config --global user.name "Your Name"
