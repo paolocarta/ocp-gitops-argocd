@@ -23,6 +23,8 @@ spec:
     inputs:
       - name: gitops-repo
         type: git
+      - name: image
+        type: image
   steps:
   - name: yq-version-update
     image: clamer/kikd:1.0.2
@@ -30,7 +32,7 @@ spec:
     script: |
       yq write -i $(params.deployment-folder)/deployment.yml \
         "spec.template.spec.containers[0].image" \
-        {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
+        "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)"
 
   - name: git-commit-repo
     image: clamer/kikd:1.0.2
@@ -40,7 +42,7 @@ spec:
     script: |
       git config user.email "tekton-bot@gmail.com"
       git config user.name "Tekton Bot"
-      git commit -am 'update to version x.x.x'
+      git commit -am 'update to version "$(cat /workspace/output-area/version)"'
 
   - name: git-push-repo
     image: clamer/kikd:1.0.2

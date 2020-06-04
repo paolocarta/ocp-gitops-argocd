@@ -40,6 +40,8 @@ spec:
       inputs:
       - name: gitops-repo
         resource: gitops-repo
+      - name: image
+        resource: {{ include "springboot-tekton.fullname" . }}-image
     params:
     - name: toNamespace
       value: {{ .Values.deploy.namespace.prefix }}-stage
@@ -52,3 +54,14 @@ spec:
       workspace: exchange-area
     runAfter:
       - maven-and-image-build
+
+  - name: sync-application
+    taskRef:
+      name: argocd-task-sync-and-wait
+    params:
+      - name: application-name
+        value: spring-boot-rest
+      - name: flags
+        value: --insecure
+    runAfter:
+      - deploy-to-stage
