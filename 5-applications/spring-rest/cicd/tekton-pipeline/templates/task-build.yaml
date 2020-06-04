@@ -3,37 +3,38 @@ kind: Task
 metadata:
   labels:
 {{ include "springboot-tekton.labels" . | nindent 4 }}
-  name: maven-build-image-build
+  name: maven-and-image-build
 spec:
   workspaces:
   - name: maven-repo
+  - name: output-area
   params:
-    - default:
+    - name: GOALS
+      default:
         - package
       description: The Maven goals to run
-      name: GOALS
       type: array
-    - default: 'quay.io/buildah/stable:v1.14.8'
+    - name: BUILDER_IMAGE
+      default: 'quay.io/buildah/stable:v1.14.8'
       description: The location of the buildah builder image.
-      name: BUILDER_IMAGE
       type: string
-    - default: ./Dockerfile
+    - name: DOCKERFILE
+      default: ./Dockerfile
       description: Path to the Dockerfile to build.
-      name: DOCKERFILE
       type: string
-    - default: .
+    - name: CONTEXT
+      default: .
       description: Path to the directory to use as context.
-      name: CONTEXT
       type: string
-    - default: 'false'
+    - name: TLSVERIFY
+      default: 'false'
       description: >-
         Verify the TLS on the registry endpoint (for push/pull to a non-TLS
         registry)
-      name: TLSVERIFY
       type: string
-    - default: oci
+    - name: FORMAT 
+      default: oci
       description: 'The format of the built container, oci or docker'
-      name: FORMAT
       type: string
 {{- if .Values.sonar.enabled }}
     - name: volumeName
@@ -45,6 +46,7 @@ spec:
       type: string
       default: sonar
 {{- end }}
+
   resources:
     inputs:
       - name: source
@@ -52,6 +54,7 @@ spec:
     outputs:
       - name: image
         type: image
+
   steps:   
   - name: package
     image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
@@ -61,6 +64,7 @@ spec:
     args:
     - -Dmaven.repo.local=$(workspaces.maven-repo.path)
     - "$(inputs.params.GOALS)"
+
 {{- if .Values.sonar.enabled }}
   - name: sonar-scan
     image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
@@ -71,6 +75,7 @@ spec:
     - -Dmaven.repo.local=$(workspaces.maven-repo.path)
     - -Dsonar.host.url={{ .Values.sonar.url }}
     - sonar:sonar
+
   - name: quality-gate
     image: quay.io/sychen/openshift-cli-jq:latest
     command: ["bash"]
@@ -81,72 +86,88 @@ spec:
     - name: "$(inputs.params.volumeName)"
       mountPath: /var/sonar
 {{- end }}
+
   - name: make-upload-dir
-    image: quay.io/openshift-pipeline/openshift-cli:latest
+    image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     command: ["mkdir"]
     args:
       - -p
       - /workspace/source/upload
+
   - name: copy-assets 
-    image: quay.io/openshift-pipeline/openshift-cli:latest
+    image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     command: ["cp"]
     args:
       - /workspace/source/target/shift-rest-1.0.0-SNAPSHOT.jar
       - /workspace/source/upload 
+
   - name: copy-assets-2
-    image: quay.io/openshift-pipeline/openshift-cli:latest
+    image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     command: ["cp"]
     args:
       - /workspace/source/Dockerfile
       - /workspace/source/upload
+
   - name: new-version
     image: clamer/kikd:1.0.2
     workingDir: /workspace/source
-    command: ["/bin/bash"]
-    args:
-      - "-c"
-      - "cp -r /tekton/home/.ssh /root/ && git fetch --tags && jx-release-version > /tekton/home/version && cat /tekton/home/version"
+    # command: ["/bin/bash"]
+    script: |
+      cp -r /tekton/home/.ssh /root/ \
+      git fetch --tags && jx-release-version > /workspace/output-area/version \
+      cat /workspace/output-area/version
+
   - name: tag-git-repo
     image: clamer/kikd:1.0.2
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:
       - "-c"
-      - "git tag $(cat /tekton/home/version)"
-  # - name: push-git-tag
-  #   image: clamer/kikd:1.0.2
-  #   workingDir: /workspace/source
-  #   command: ["/bin/bash"]
-  #   args:
-  #     - -c
-  #     - "cp -r /tekton/home/.ssh /root/ && git push origin --tags"
+      - "git tag $(cat /workspace/output-area/version)"
+
   - name: build-image
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source/upload
-    # command: ['']
     script: |
       buildah bud --format=$(inputs.params.FORMAT) \
       --tls-verify=$(inputs.params.TLSVERIFY) --layers \
-      -f "$(inputs.params.DOCKERFILE)" -t "$(outputs.resources.image.url)":"$(cat /tekton/home/version)" \
+      -f "$(inputs.params.DOCKERFILE)" -t "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)" \
       "$(inputs.params.CONTEXT)"
     volumeMounts:
     - name: varlibcontainers
       mountPath: /var/lib/containers
     securityContext:
       privileged: true
+
   - name: image-push
     image: $(inputs.params.BUILDER_IMAGE)
     workingDir: /workspace/source
-    # command: ['buildah']
     script: |
       buildah push --tls-verify=$(inputs.params.TLSVERIFY) \
-      "$(outputs.resources.image.url)":"$(cat /tekton/home/version)" \
-      "docker://$(outputs.resources.image.url)":"$(cat /tekton/home/version)"
+      "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)" \
+      "docker://$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)"
     volumeMounts:
     - name: varlibcontainers
       mountPath: /var/lib/containers
     securityContext:
       privileged: true
+
+  - name: tag-image
+    image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
+    # command: ["/usr/local/bin/oc"]
+    script: |
+      oc tag \
+      "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)" \
+      "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)"
+
+  - name: push-git-tag
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/source
+    command: ["/bin/bash"]
+    args:
+      - -c
+      - "cp -r /tekton/home/.ssh /root/ && git push origin --tags"
+      
   volumes:
 {{- if .Values.sonar.enabled }}
   - name: "$(inputs.params.volumeName)"

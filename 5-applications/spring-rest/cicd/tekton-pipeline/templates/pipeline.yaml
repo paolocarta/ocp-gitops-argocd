@@ -7,6 +7,7 @@ metadata:
 spec:
   workspaces:
   - name: local-maven-repo
+  - name: exchange-area
   resources:
   - name: {{ include "springboot-tekton.fullname" . }}-git
     type: git
@@ -16,9 +17,9 @@ spec:
     type: image
   ####
   tasks:
-  - name: maven-build-image-build
+  - name: maven-and-image-build
     taskRef: 
-      name: maven-build-image-build
+      name: maven-and-image-build
     resources:
       inputs:
       - name: source
@@ -29,50 +30,26 @@ spec:
     workspaces:
     - name: maven-repo
       workspace: local-maven-repo
+    - name: output-area
+      workspace: exchange-area
   ####
-  - name: deploy-to-stage
-    taskRef:
-      name: deploy
-    resources:
-      inputs:
-      - name: templates
-        resource: {{ include "springboot-tekton.fullname" . }}-templates
-    runAfter:
-      - maven-build-image-build
-    params:
-    - name: fromNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-cicd
-    - name: toNamespace
-      value: {{ .Values.deploy.namespace.prefix }}-stage
-    - name: tag
-      value: latest 
-    - name: imageStream
-      value: {{ include "springboot-tekton.fullname" . }} 
-    - name: deployment
-      value: {{ include "springboot-tekton.fullname" . }} 
-  ####
-  # - name: deploy-to-prod
+  # - name: deploy-to-stage
   #   taskRef:
   #     name: deploy
-  #   # conditions:
-  #   #   - conditionRef: "verify"
-  #   #     params:
-  #   #       - name: "path"
-  #   #         value: "$(params.path)"
   #   resources:
   #     inputs:
   #     - name: templates
   #       resource: {{ include "springboot-tekton.fullname" . }}-templates
   #   runAfter:
-  #     - deploy-to-stage
+  #     - maven-and-image-build
   #   params:
   #   - name: fromNamespace
-  #     value: {{ .Values.deploy.namespace.prefix }}-stage
+  #     value: {{ .Values.deploy.namespace.prefix }}-cicd
   #   - name: toNamespace
-  #     value: {{ .Values.deploy.namespace.prefix }}-prod 
+  #     value: {{ .Values.deploy.namespace.prefix }}-stage
   #   - name: tag
   #     value: latest 
   #   - name: imageStream
   #     value: {{ include "springboot-tekton.fullname" . }} 
   #   - name: deployment
-  #     value: {{ include "springboot-tekton.fullname" . }}
+  #     value: {{ include "springboot-tekton.fullname" . }} 

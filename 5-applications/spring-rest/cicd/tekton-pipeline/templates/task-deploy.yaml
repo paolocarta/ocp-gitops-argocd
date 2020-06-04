@@ -27,7 +27,7 @@ spec:
         type: git
   steps:
     - name: update-deployment-from-template
-      image: quay.io/openshift-pipeline/openshift-cli:latest
+      image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
       workingDir: /workspace/templates/manifests
       script: |
         #!/usr/bin/env bash
@@ -40,14 +40,14 @@ spec:
           -p READINESS_RESPONSE="status.:.UP" \
           | oc apply -f -
     - name: tag-image
-      image: quay.io/openshift-pipeline/openshift-cli:latest
+      image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
       command: ["/usr/local/bin/oc"]
       args:
         - tag
         - "$(inputs.params.fromNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
         - "$(inputs.params.toNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
     - name: verify-deployment
-      image: quay.io/openshift-pipeline/openshift-cli:latest
+      image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
       command: ["/usr/local/bin/oc"]
       args:
         - rollout
