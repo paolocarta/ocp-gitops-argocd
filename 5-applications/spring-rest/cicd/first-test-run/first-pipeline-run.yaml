@@ -9,9 +9,9 @@ spec:
   - name: basic-spring-boot-git
     resourceRef:
       name: basic-spring-boot-git-first-run
-  - name: basic-spring-boot-templates
+  - name: gitops-repo
     resourceRef:
-      name: basic-spring-boot-templates-first-run
+      name: gitops-manifests-pipe-resource
   - name: basic-spring-boot-image
     resourceRef:
       name: basic-spring-boot-image

@@ -58,9 +58,9 @@ spec:
       - name: {{ include "springboot-tekton.fullname" . }}-git
         resourceRef:
           name: $(params.git-repo-name)-code-$(uid)
-      - name: {{ include "springboot-tekton.fullname" . }}-templates
+      - name: gitops-repo
         resourceRef:
-          name: $(params.git-repo-name)-man-$(uid)
+          name: gitops-manifests-pipe-resource
       - name: {{ include "springboot-tekton.fullname" . }}-image
         resourceRef:
           name: {{ include "springboot-tekton.fullname" . }}-image
