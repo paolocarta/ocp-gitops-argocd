@@ -5,53 +5,29 @@ metadata:
 {{ include "springboot-tekton.labels" . | nindent 4 }}
   name: deploy
 spec:
+  workspaces:
+    - name: output-area
   params:
-    - description: The namespace we are tagging from
-      name: fromNamespace
-      type: string
     - description: The namespace we are tagging to
       name: toNamespace
       type: string
     - description: The image tag
       name: tag
       type: string
-    - description: The imageStream
-      name: imageStream
-      type: string
+      default: latest
     - description: the deployment
-      name: deployment
+      name: deployment-folder
       type: string
+      default: manifests
   resources:
     inputs:
-      - name: templates
+      - name: gitops-repo
         type: git
   steps:
-    - name: update-deployment-from-template
-      image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-      workingDir: /workspace/templates/manifests
-      script: |
-        #!/usr/bin/env bash
-        echo "Updating namespace $(inputs.params.toNamespace)"
-        oc process \
-          -f deployment.yml \
-          -p "APPLICATION_NAME=$(inputs.params.imageStream)" \
-          -p "NAMESPACE=$(inputs.params.toNamespace)" \
-          -p READINESS_PATH="/health" \
-          -p READINESS_RESPONSE="status.:.UP" \
-          | oc apply -f -
-    - name: tag-image
-      image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-      command: ["/usr/local/bin/oc"]
-      args:
-        - tag
-        - "$(inputs.params.fromNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
-        - "$(inputs.params.toNamespace)/$(inputs.params.imageStream):$(inputs.params.tag)"
-    - name: verify-deployment
-      image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-      command: ["/usr/local/bin/oc"]
-      args:
-        - rollout
-        - status
-        - "dc/$(inputs.params.deployment)"
-        - -n
-        - "$(inputs.params.toNamespace)"
+  - name: test
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/gitops-repo
+    # command: ["/bin/bash"]
+    script: |
+      cat /workspace/output-area/version &&
+      cat $(params.deployment-folder)

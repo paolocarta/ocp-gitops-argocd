@@ -152,13 +152,13 @@ spec:
     securityContext:
       privileged: true
 
-  - name: tag-image
-    image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-    # command: ["/usr/local/bin/oc"]
-    script: |
-      oc tag \
-      "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)" \
-      "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)"
+  # - name: tag-image
+  #   image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
+  #   # command: ["/usr/local/bin/oc"]
+  #   script: |
+  #     oc tag \
+  #     "$(inputs.params.imageStream)":"$(cat /workspace/output-area/version)" \
+  #     "{{ .Values.deploy.namespace.prefix }}-cicd/$(inputs.params.imageStream)":"$(cat /workspace/output-area/version)"
 
   - name: push-git-tag
     image: clamer/kikd:1.0.2

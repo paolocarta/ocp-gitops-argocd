@@ -9,9 +9,9 @@ spec:
   - name: local-maven-repo
   - name: exchange-area
   resources:
-  - name: {{ include "springboot-tekton.fullname" . }}-git
+  - name: {{ include "springboot-tekton.fullname" . }}-source
     type: git
-  - name: {{ include "springboot-tekton.fullname" . }}-templates
+  - name: gitops-repo
     type: git
   - name: {{ include "springboot-tekton.fullname" . }}-image
     type: image
@@ -23,7 +23,7 @@ spec:
     resources:
       inputs:
       - name: source
-        resource: {{ include "springboot-tekton.fullname" . }}-git
+        resource: {{ include "springboot-tekton.fullname" . }}-source
       outputs:
       - name: image
         resource: {{ include "springboot-tekton.fullname" . }}-image
@@ -33,23 +33,22 @@ spec:
     - name: output-area
       workspace: exchange-area
   ####
-  # - name: deploy-to-stage
-  #   taskRef:
-  #     name: deploy
-  #   resources:
-  #     inputs:
-  #     - name: templates
-  #       resource: {{ include "springboot-tekton.fullname" . }}-templates
-  #   runAfter:
-  #     - maven-and-image-build
-  #   params:
-  #   - name: fromNamespace
-  #     value: {{ .Values.deploy.namespace.prefix }}-cicd
-  #   - name: toNamespace
-  #     value: {{ .Values.deploy.namespace.prefix }}-stage
-  #   - name: tag
-  #     value: latest 
-  #   - name: imageStream
-  #     value: {{ include "springboot-tekton.fullname" . }} 
-  #   - name: deployment
-  #     value: {{ include "springboot-tekton.fullname" . }} 
+  - name: deploy-to-stage
+    taskRef:
+      name: deploy
+    resources:
+      inputs:
+      - name: gitops-repo
+        resource: gitops-repo
+    params:
+    - name: toNamespace
+      value: {{ .Values.deploy.namespace.prefix }}-stage
+    - name: tag
+      value: latest 
+    - name: deployment-folder
+      value: "5-applications/spring-rest/manifests" 
+    workspaces:
+    - name: output-area
+      workspace: exchange-area
+    runAfter:
+      - maven-and-image-build

@@ -30,20 +30,20 @@ spec:
       - name: revision
         value: $(params.git-branch)
   ####
-  - apiVersion: tekton.dev/v1alpha1
-    kind: PipelineResource
-    metadata:
-      name: $(params.git-repo-name)-man-$(uid)
-      labels:
-        commit-id: $(params.git-commit-id)
-        # branch: $(params.git-branch)
-    spec:
-      type: git
-      params:
-      - name: url
-        value: $(params.git-repo-url)
-      - name: revision
-        value: $(params.git-branch)
+  # - apiVersion: tekton.dev/v1alpha1
+  #   kind: PipelineResource
+  #   metadata:
+  #     name: $(params.git-repo-name)-man-$(uid)
+  #     labels:
+  #       commit-id: $(params.git-commit-id)
+  #       # branch: $(params.git-branch)
+  #   spec:
+  #     type: git
+  #     params:
+  #     - name: url
+  #       value: $(params.git-repo-url)
+  #     - name: revision
+  #       value: $(params.git-branch)
   ####
   - apiVersion: tekton.dev/v1alpha1
     kind: PipelineRun
