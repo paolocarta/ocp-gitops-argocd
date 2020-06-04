@@ -38,17 +38,15 @@ spec:
     securityContext:
       privileged: true
     script: |
-      cp -r /tekton/home/.ssh /root/ && \
-      git commit -am 'msg' 
-
-      
-
-  #   git config --global user.email "you@example.com"
-  # git config --global user.name "Your Name"
+      git config user.email "tekton-bot@gmail.com"
+      git config user.name "Tekton Bot"
+      git commit -am 'update to version x.x.x'
 
   # - name: git-push-repo
   #   image: clamer/kikd:1.0.2
   #   workingDir: /workspace/gitops-repo
+  #   securityContext:
+  #     privileged: true
   #   script: |
   #     cp -r /tekton/home/.ssh /root/ && \
   #     git push origin master
