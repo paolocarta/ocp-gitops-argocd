@@ -32,7 +32,7 @@ spec:
         "spec.template.spec.containers[0].image" \
         {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
 
-  - name: whoami
+  - name: git-commit-repo
     image: clamer/kikd:1.0.2
     workingDir: /workspace/gitops-repo
     securityContext:
@@ -42,11 +42,11 @@ spec:
       git config user.name "Tekton Bot"
       git commit -am 'update to version x.x.x'
 
-  # - name: git-push-repo
-  #   image: clamer/kikd:1.0.2
-  #   workingDir: /workspace/gitops-repo
-  #   securityContext:
-  #     privileged: true
-  #   script: |
-  #     cp -r /tekton/home/.ssh /root/ && \
-  #     git push origin master
+  - name: git-push-repo
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/gitops-repo
+    securityContext:
+      privileged: true
+    script: |
+      cp -r /tekton/home/.ssh /root/ && \
+      git push origin master
