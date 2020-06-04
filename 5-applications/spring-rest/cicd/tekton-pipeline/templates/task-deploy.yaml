@@ -34,9 +34,9 @@ spec:
 
   - name: whoami
     image: clamer/kikd:1.0.2
-    imagePullPolicy: Always
     workingDir: /workspace/gitops-repo
-    # command: ["/bin/bash"]
+    securityContext:
+      runAsUser: root
     script: |
       whoami
       
