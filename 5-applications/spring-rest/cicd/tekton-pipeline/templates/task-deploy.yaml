@@ -36,7 +36,7 @@ spec:
     image: clamer/kikd:1.0.2
     workingDir: /workspace/gitops-repo
     securityContext:
-      runAsUser: root
+      privileged: true
     script: |
       whoami
       
