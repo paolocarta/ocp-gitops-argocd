@@ -38,7 +38,7 @@ spec:
     command: ["/bin/bash"]
     args:
       - "-c"
-      - "git commit -am 'update to version "$(cat /workspace/output-area/version)"'"
+      - "git commit -am 'msg'"
 
   # - name: git-push-repo
   #   image: clamer/kikd:1.0.2
