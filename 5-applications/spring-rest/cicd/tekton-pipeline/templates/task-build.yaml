@@ -111,7 +111,6 @@ spec:
   - name: new-version
     image: clamer/kikd:1.0.2
     workingDir: /workspace/source
-    # command: ["/bin/bash"]
     script: |
       cp -r /tekton/home/.ssh /root/ && \
       git fetch --tags && jx-release-version > /workspace/output-area/version && \
