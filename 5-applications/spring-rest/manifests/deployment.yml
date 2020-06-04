@@ -20,13 +20,7 @@ spec:
     spec:
       containers:
       - name: basic-spring-boot
-        # - env:
-        #   - name: JWS_ADMIN_USERNAME
-        #     value: ${JWS_ADMIN_USERNAME}
-        #   - name: JWS_ADMIN_PASSWORD
-        #     value: ${JWS_ADMIN_PASSWORD}
-        image: basic-spring-boot:0.0.1
-        # imagePullPolicy: Always
+        image: basic-spring-boot:1.0.22
         resources:
           requests:
             cpu: 300m
