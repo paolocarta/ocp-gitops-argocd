@@ -27,12 +27,10 @@ spec:
   - name: yq-version-update
     image: clamer/kikd:1.0.2
     workingDir: /workspace/gitops-repo
-    # command: ["/bin/bash"]
     script: |
-      ls /workspace/gitops-repo
-  #     yq write -i $(params.deployment-folder)/deployment.yml \
-  #       "spec.template.spec.containers[0].image" \
-  #       {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
+      yq write -i $(params.deployment-folder)/deployment.yml \
+        "spec.template.spec.containers[0].image" \
+        {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
 
   # - name: git-commit-repo
   #   image: clamer/kikd:1.0.2
