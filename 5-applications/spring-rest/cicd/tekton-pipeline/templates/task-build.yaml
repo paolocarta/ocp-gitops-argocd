@@ -113,8 +113,8 @@ spec:
     workingDir: /workspace/source
     # command: ["/bin/bash"]
     script: |
-      cp -r /tekton/home/.ssh /root/ \
-      git fetch --tags && jx-release-version > /workspace/output-area/version \
+      cp -r /tekton/home/.ssh /root/ && \
+      git fetch --tags && jx-release-version > /workspace/output-area/version && \
       cat /workspace/output-area/version
 
   - name: tag-git-repo
@@ -167,7 +167,7 @@ spec:
     args:
       - -c
       - "cp -r /tekton/home/.ssh /root/ && git push origin --tags"
-      
+
   volumes:
 {{- if .Values.sonar.enabled }}
   - name: "$(inputs.params.volumeName)"
