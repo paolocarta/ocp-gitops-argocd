@@ -30,4 +30,4 @@ spec:
     # command: ["/bin/bash"]
     script: |
       cat /workspace/output-area/version &&
-      cat $(params.deployment-folder)
+      ls $(params.deployment-folder)
