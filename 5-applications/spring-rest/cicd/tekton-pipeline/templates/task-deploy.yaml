@@ -29,22 +29,23 @@ spec:
     workingDir: /workspace/gitops-repo
     # command: ["/bin/bash"]
     script: |
-      yq write -i $(params.deployment-folder)/deployment.yml \
-        "spec.template.spec.containers[0].image" \
-        {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
+      ls /workspace/gitops-repo
+  #     yq write -i $(params.deployment-folder)/deployment.yml \
+  #       "spec.template.spec.containers[0].image" \
+  #       {{.Values.fullnameOverride}}:"$(cat /workspace/output-area/version)"
 
-  - name: git-commit-repo
-    image: clamer/kikd:1.0.2
-    workingDir: /workspace/gitops-repo
-    command: ["/bin/bash"]
-    args:
-      - "-c"
-      - "git commit -am 'update to version "$(cat /workspace/output-area/version)"'"
+  # - name: git-commit-repo
+  #   image: clamer/kikd:1.0.2
+  #   workingDir: /workspace/gitops-repo
+  #   command: ["/bin/bash"]
+  #   args:
+  #     - "-c"
+  #     - "git commit -am 'update to version "$(cat /workspace/output-area/version)"'"
 
-  - name: git-push-repo
-    image: clamer/kikd:1.0.2
-    workingDir: /workspace/gitops-repo
-    command: ["/bin/bash"]
-    args:
-      - "-c"
-      - "git push origin master"
+  # - name: git-push-repo
+  #   image: clamer/kikd:1.0.2
+  #   workingDir: /workspace/gitops-repo
+  #   command: ["/bin/bash"]
+  #   args:
+  #     - "-c"
+  #     - "git push origin master"
