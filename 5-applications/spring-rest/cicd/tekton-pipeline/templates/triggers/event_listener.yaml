@@ -5,7 +5,13 @@ metadata:
 spec:
   serviceAccountName: {{ .Values.serviceAccount.name }}
   triggers:
-  - bindings:
-    - name: {{ include "springboot-tekton.fullname" . }}-tb
-    template:
-      name: {{ include "springboot-tekton.fullname" . }}-tt
+    - name: dev-cd-deploy-from-master
+      interceptors:
+        - cel:
+            filter: >-
+              body.repository.full_name == 'paolocarta/spring-rest-tekton-pipeline' &&
+              body.ref.startsWith('refs/heads/master')
+      bindings:
+      - name: {{ include "springboot-tekton.fullname" . }}-tb
+      template:
+        name: {{ include "springboot-tekton.fullname" . }}-tt
