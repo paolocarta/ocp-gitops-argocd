@@ -6,7 +6,7 @@ spec:
   pipelineRef:
     name: basic-spring-boot-pipeline
   resources:
-  - name: basic-spring-boot-git
+  - name: basic-spring-boot-source
     resourceRef:
       name: basic-spring-boot-git-first-run
   - name: gitops-repo
