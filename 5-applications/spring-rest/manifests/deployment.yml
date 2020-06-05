@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -8,14 +8,15 @@ metadata:
 spec:
   replicas: 2
   selector:
-    deploymentConfig: basic-spring-boot
+    matchLabels:
+      deployment: basic-spring-boot
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: basic-spring-boot
-        deploymentConfig: basic-spring-boot
+        deployment: basic-spring-boot
       name: basic-spring-boot
     spec:
       containers:

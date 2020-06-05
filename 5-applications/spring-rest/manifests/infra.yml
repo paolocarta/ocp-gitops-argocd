@@ -14,7 +14,7 @@ spec:
   selector:
     deploymentConfig: basic-spring-boot
 ---
-apiVersion: v1
+apiVersion: route.openshift.io/v1
 id: basic-spring-boot-http
 kind: Route
 metadata:
@@ -31,7 +31,7 @@ spec:
     weight: 100
   wildcardPolicy: None
 ---
-apiVersion: v1
+apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   labels:
