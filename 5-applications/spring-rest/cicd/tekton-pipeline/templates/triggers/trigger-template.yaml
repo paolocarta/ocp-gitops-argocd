@@ -26,7 +26,7 @@ spec:
       type: git
       params:
       - name: url
-        value: $(git-repo-ssh-url)
+        value: $(params.git-repo-ssh-url)
       - name: revision
         value: $(params.git-branch)
   ####
