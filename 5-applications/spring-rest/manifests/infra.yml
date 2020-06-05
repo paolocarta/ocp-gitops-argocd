@@ -15,7 +15,6 @@ spec:
     deploymentConfig: basic-spring-boot
 ---
 apiVersion: route.openshift.io/v1
-id: basic-spring-boot-http
 kind: Route
 metadata:
   annotations:
