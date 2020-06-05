@@ -61,11 +61,11 @@ spec:
   destination:
     namespace: istio-system
     server: 'https://kubernetes.default.svc'
-  ignoreDifferences:
-  - group: maistra.io
-    jsonPointers:
-    - /spec/members
-    kind: ServiceMeshMemberRoll
+  # ignoreDifferences:
+  # - group: maistra.io
+  #   jsonPointers:
+  #   - /spec/members
+  #   kind: ServiceMeshMemberRoll
   project: infra
   source:
     path: 6-middleware/servicemesh
