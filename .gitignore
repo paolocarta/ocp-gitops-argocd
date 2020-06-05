@@ -2,3 +2,5 @@
 ssh/git-private-key
 
 5-applications/spring-rest/cicd/tekton-pipeline/pipeline-secret.yaml
+
+5-applications/spring-rest/cicd/tekton-pipeline/argocd-task-secret.yaml
