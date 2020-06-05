@@ -44,11 +44,11 @@ spec:
       git config user.name "Tekton Bot"
       git commit -am "update to version $(cat /workspace/output-area/version)"
 
-  # - name: git-push-repo
-  #   image: clamer/kikd:1.0.2
-  #   workingDir: /workspace/gitops-repo
-  #   securityContext:
-  #     privileged: true
-  #   script: |
-  #     cp -r /tekton/home/.ssh /root/
-  #     git push origin master
+  - name: git-push-repo
+    image: clamer/kikd:1.0.2
+    workingDir: /workspace/gitops-repo
+    securityContext:
+      privileged: true
+    script: |
+      cp -r /tekton/home/.ssh /root/
+      git push origin master
