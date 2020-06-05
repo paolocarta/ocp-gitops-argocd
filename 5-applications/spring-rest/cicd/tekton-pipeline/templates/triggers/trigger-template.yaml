@@ -6,6 +6,8 @@ spec:
   params:
   - name: git-repo-url
     description: The git repository url
+  - name: git-repo-ssh-url
+    description: The git repository ssh url
   - name: git-commit-id
     description: The git commit sha
   - name: git-branch
