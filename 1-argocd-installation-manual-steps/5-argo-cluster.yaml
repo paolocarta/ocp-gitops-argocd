@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   # version: v1.5.5
-  usersAnonymousEnabled: true
+  usersAnonymousEnabled: false
   ha:
     enabled: true
   dex:
@@ -20,7 +20,7 @@ spec:
     enabled: true
     route: true
   rbac:
-    defaultPolicy: 'role:admin'
+    defaultPolicy: 'role:readonly'
     policy: |
       g, system:cluster-admins, role:admin
       g, argocd-users, role:readonly
@@ -31,7 +31,7 @@ spec:
     - url: https://github.com/paolocarta/ocp-gitops-argocd.git
   server:
     enabled: true
-    route: false
+    route: true
     autoscale:
       enabled: true
       hpa:
