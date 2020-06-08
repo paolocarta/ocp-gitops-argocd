@@ -28,6 +28,8 @@ spec:
     kind: Service
     name: basic-spring-boot
     weight: 100
+  port:
+    targetPort: 8080
   wildcardPolicy: None
 ---
 apiVersion: image.openshift.io/v1
