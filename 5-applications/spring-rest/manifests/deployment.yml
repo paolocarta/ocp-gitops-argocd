@@ -14,10 +14,12 @@ spec:
   #   type: Recreate
   template:
     metadata:
+      name: basic-spring-boot
       labels:
         app: basic-spring-boot
         deployment: basic-spring-boot
-      name: basic-spring-boot
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: basic-spring-boot
