@@ -10,8 +10,8 @@ spec:
   selector:
     matchLabels:
       deployment: basic-spring-boot
-  strategy:
-    type: Recreate
+  # strategy:
+  #   type: Recreate
   template:
     metadata:
       labels:

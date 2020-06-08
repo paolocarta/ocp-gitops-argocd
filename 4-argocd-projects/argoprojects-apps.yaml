@@ -119,7 +119,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spring-boot-rest
+  name: spring-boot-rest-stage
   namespace: argocd
 spec:
   destination:
@@ -133,7 +133,26 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: spring-boot-rest-prod
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: developerteam1-prod
+#     server: 'https://kubernetes.default.svc'
+#   project: demoapp
+#   source:
+#     path: 5-applications/spring-rest/manifests
+#     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+#     targetRevision: HEAD
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
