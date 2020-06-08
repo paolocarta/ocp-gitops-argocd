@@ -12,7 +12,7 @@ spec:
   - port: 8080
     targetPort: 8080
   selector:
-    deploymentConfig: basic-spring-boot
+    deployment: basic-spring-boot
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
