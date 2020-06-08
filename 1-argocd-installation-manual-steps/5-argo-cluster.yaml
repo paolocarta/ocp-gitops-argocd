@@ -25,6 +25,7 @@ spec:
       g, system:cluster-admins, role:admin
       g, argocd-users, role:readonly
       g, argocd-admins, role:admin
+      g, tektonbot, role:admin
     scopes: '[groups]'
   applicationInstanceLabelKey: paolocarta.me/argoapp
   repositories: |
