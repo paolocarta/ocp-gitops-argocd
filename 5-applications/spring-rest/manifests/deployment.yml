@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: basic-spring-boot
-        image: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot:1.0.35
+        image: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot:1.0.36
         resources:
           requests:
             cpu: 300m
