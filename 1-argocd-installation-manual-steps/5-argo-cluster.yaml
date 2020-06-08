@@ -10,8 +10,8 @@ spec:
     enabled: true
   dex:
     image: quay.io/redhat-cop/dex
-    # version: v2.22.0-openshift
-    version: v2.21.0
+    version: v2.22.0-openshift
+    # version: v2.21.0
     openShiftOAuth: false
   grafana:
     enabled: true
