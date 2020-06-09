@@ -55,12 +55,12 @@ spec:
     runAfter:
       - maven-and-image-build
 
-  - name: sync-application
+  - name: sync-application-stage
     taskRef:
       name: argocd-task-sync-and-wait
     params:
       - name: application-name
-        value: spring-boot-rest
+        value: spring-boot-rest-stage
       - name: flags
         value: --insecure
     runAfter:
