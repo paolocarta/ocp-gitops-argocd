@@ -33,7 +33,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tekton-pipeline-devteam1
+  name: tekton-pipeline-spring-rest-devteam1
   namespace: argocd
 spec:
   destination:
