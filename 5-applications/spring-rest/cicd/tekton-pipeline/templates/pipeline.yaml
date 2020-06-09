@@ -48,7 +48,7 @@ spec:
     - name: tag
       value: latest 
     - name: deployment-folder
-      value: "5-applications/spring-rest/manifests" 
+      value: "5-applications/spring-rest/manifests/stage" 
     workspaces:
     - name: output-area
       workspace: exchange-area
