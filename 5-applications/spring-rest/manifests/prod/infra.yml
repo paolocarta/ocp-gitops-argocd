@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: The web server's http port.
+  labels:
+    app: basic-spring-boot
+  name: basic-spring-boot
+  namespace: developerteam1-prod
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    deployment: basic-spring-boot
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    description: Route for application's http service.
+  labels:
+    app: basic-spring-boot
+  name: basic-spring-boot
+  namespace: developerteam1-prod
+spec:
+  to:
+    kind: Service
+    name: basic-spring-boot
+    weight: 100
+  port:
+    targetPort: 8080
+  wildcardPolicy: None
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: basic-spring-boot
+  name: basic-spring-boot
+  namespace: developerteam1-prod
