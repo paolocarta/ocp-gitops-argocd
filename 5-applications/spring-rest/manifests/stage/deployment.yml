@@ -10,8 +10,6 @@ spec:
   selector:
     matchLabels:
       deployment: basic-spring-boot
-  # strategy:
-  #   type: Recreate
   template:
     metadata:
       name: basic-spring-boot
@@ -23,7 +21,7 @@ spec:
     spec:
       containers:
       - name: basic-spring-boot
-        image: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot:1.0.36
+        image: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot:1.1.2
         resources:
           requests:
             cpu: 300m
