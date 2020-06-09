@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: basic-spring-boot
+  # namespace: developerteam1-prod
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: basic-spring-boot
+  # namespace: developerteam1-prod
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: basic-spring-boot
+  # namespace: developerteam1-prod

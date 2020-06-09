@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../base
+
+namespace: developerteam1-prod
+
+patchesStrategicMerge:
+- replica-and-rollout-strategy.yaml
+- infra.yaml
+
+# secretGenerator:
+# - literals:
+#   - db-password=12345
+#   name: sl-demo-app
+#   type: Opaque
+
+images:
+- name: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot
+  newName: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot
+  newTag: 1.1.2

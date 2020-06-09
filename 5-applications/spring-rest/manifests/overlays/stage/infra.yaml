@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: basic-spring-boot
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: basic-spring-boot
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: basic-spring-boot
