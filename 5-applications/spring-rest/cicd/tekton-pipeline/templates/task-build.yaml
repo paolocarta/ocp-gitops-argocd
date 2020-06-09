@@ -110,7 +110,7 @@ spec:
       - /workspace/source/upload
 
   - name: new-version
-    image: clamer/kikd:1.0.2
+    image: clamer/kikd:1.0.3
     workingDir: /workspace/source
     script: |
       cp -r /tekton/home/.ssh /root/ && \
@@ -119,7 +119,7 @@ spec:
       # cat /workspace/output-area/version
 
   - name: tag-git-repo
-    image: clamer/kikd:1.0.2
+    image: clamer/kikd:1.0.3
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:
@@ -162,7 +162,7 @@ spec:
   #     "{{ .Values.deploy.namespace.prefix }}-cicd/$(inputs.params.imageStream)":"$(cat /workspace/output-area/version)"
 
   - name: push-git-tag
-    image: clamer/kikd:1.0.2
+    image: clamer/kikd:1.0.3
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:
