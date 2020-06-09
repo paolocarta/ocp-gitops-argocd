@@ -68,7 +68,7 @@ spec:
   source:
     path: 4-argocd-projects
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: feature/deploy-kustomize
   syncPolicy:
     automated:
       prune: true
