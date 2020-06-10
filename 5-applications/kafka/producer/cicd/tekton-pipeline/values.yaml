@@ -38,7 +38,7 @@ pvc:
 maven:
   image:
     repository: maven
-    tag: 3.6.0-jdk-8-slim
+    tag: 3.6.3-openjdk-11-slim
     
 sonar:
   enabled: false
