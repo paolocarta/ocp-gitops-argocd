@@ -62,4 +62,4 @@ spec:
       - name: flags
         value: --insecure
     runAfter:
-      - deploy-to-stage
+      - deploy-to-env
