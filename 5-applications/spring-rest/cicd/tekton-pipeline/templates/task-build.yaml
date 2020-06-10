@@ -61,7 +61,7 @@ spec:
     image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
     workingDir: /workspace/source
     command:
-    - /usr/bin/mvn
+    - mvn
     args:
     - -Dmaven.repo.local=$(workspaces.maven-repo.path)
     - "$(inputs.params.GOALS)"
@@ -99,7 +99,7 @@ spec:
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     command: ["cp"]
     args:
-      - /workspace/source/target/*.jar
+      - /workspace/source/target/shift-rest-1.0.0-SNAPSHOT.jar
       - /workspace/source/upload 
 
   - name: copy-assets-2
