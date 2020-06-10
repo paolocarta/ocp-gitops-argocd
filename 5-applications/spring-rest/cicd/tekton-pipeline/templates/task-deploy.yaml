@@ -28,6 +28,8 @@ spec:
     imagePullPolicy: Always
     workingDir: /workspace/gitops-repo/$(params.deployment-folder)
     script: |
+      pwd \
+      ls -l \
       kustomize edit set image \
         "$(resources.inputs.image.url)":"$(cat /workspace/output-area/version)"
 
