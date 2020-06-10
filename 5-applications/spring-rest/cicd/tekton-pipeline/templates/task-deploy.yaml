@@ -23,12 +23,6 @@ spec:
       - name: image
         type: image
   steps:
-  - name: kustomize-version-update-debug
-    image: clamer/kikd:1.0.3
-    workingDir: /workspace/gitops-repo/$(params.deployment-folder)
-    script: |
-      ls -l
-
   - name: kustomize-version-update
     image: clamer/kikd:1.0.3
     workingDir: /workspace/gitops-repo/$(params.deployment-folder)
