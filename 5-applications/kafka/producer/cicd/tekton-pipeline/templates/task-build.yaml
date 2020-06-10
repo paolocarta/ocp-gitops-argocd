@@ -96,19 +96,11 @@ spec:
       - -p
       - /workspace/source/upload
 
-  - name: copy-assets-ls-dir
-    image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-    command: ["ls"]
-    args:
-      - -l
-      - /workspace/source/target
-
   - name: copy-assets 
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-    command: ["cp"]
-    args:
-      - "/workspace/source/target/{{ include "springboot-tekton.fullname" . }}-*.jar"
-      - "/workspace/source/upload" 
+    workingDir: /workspace/source
+    script: |
+      cp target/{{ include "springboot-tekton.fullname" . }}-*.jar upload
 
   - name: copy-assets-2
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
