@@ -31,8 +31,6 @@ RUN yum update  -y && \
     rm -rf git-${GIT_VERSION} && \
     yum -y groupinstall 'Development Tools' && \
     yum remove -y git && \
-    # jq
-    # wget https://github.com/stedolan/jq/releases/download/jq-${JQ_RELEASE_VERSION}/jq-linux64 && mv jq-linux64 jq && chmod +x jq && mv jq /usr/bin/jq && \
     # yq
     wget https://github.com/mikefarah/yq/releases/download/${YQ_RELEASE_VERSION}/yq_linux_amd64 && mv yq_linux_amd64 yq && chmod +x yq && mv yq /usr/bin/yq && \
     yum clean all
@@ -47,7 +45,9 @@ RUN curl -L https://get.helm.sh/helm-v${HELM3_VERSION}-linux-amd64.tar.gz | tar 
   mkdir /usr/bin/helm-bin && \
   ln -s /usr/bin/helm /usr/bin/helm-bin/helm
 
-RUN curl -s https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh | bash
+ENV KUSTOMIZE_VER 3.6.1
+RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash && \
+    mv kustomize /usr/local/bin/ 
 
 ENV JX_RELEASE_VERSION 1.0.17
 
