@@ -27,7 +27,7 @@ spec:
   source:
     path: 6-middleware/amqstreams
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
@@ -46,7 +46,7 @@ spec:
   source:
     path: 6-middleware/amqstreams/mirrored-cluster
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
@@ -70,7 +70,7 @@ spec:
   source:
     path: 6-middleware/servicemesh
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
@@ -89,7 +89,7 @@ spec:
   source:
     path: 6-middleware/sealed-secrets
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true

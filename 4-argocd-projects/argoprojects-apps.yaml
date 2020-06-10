@@ -91,7 +91,7 @@ spec:
 #         value: developerteam2
 #     path: 5-applications/spring-rest/cicd/tekton-pipeline
 #     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-#     targetRevision: HEAD
+#     targetRevision: master
 #   syncPolicy:
 #     automated:
 #       prune: true
@@ -110,7 +110,7 @@ spec:
   source:
     path: 5-applications/bookinfo
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
@@ -172,7 +172,7 @@ spec:
   source:
     path: 5-applications/kafka-prod-cons
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: master
   syncPolicy:
     automated:
       prune: true
