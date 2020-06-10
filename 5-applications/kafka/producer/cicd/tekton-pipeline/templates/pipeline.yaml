@@ -1,0 +1,65 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  labels:
+{{ include "springboot-tekton.labels" . | nindent 4 }}
+  name: {{ include "springboot-tekton.fullname" . }}-pipeline
+spec:
+  workspaces:
+  - name: local-maven-repo
+  - name: exchange-area
+  resources:
+  - name: {{ include "springboot-tekton.fullname" . }}-source
+    type: git
+  - name: gitops-repo
+    type: git
+  - name: {{ include "springboot-tekton.fullname" . }}-image
+    type: image
+  ####
+  tasks:
+  - name: maven-and-image-build
+    taskRef: 
+      name: maven-and-image-build
+    resources:
+      inputs:
+      - name: source
+        resource: {{ include "springboot-tekton.fullname" . }}-source
+      outputs:
+      - name: image
+        resource: {{ include "springboot-tekton.fullname" . }}-image
+    workspaces:
+    - name: maven-repo
+      workspace: local-maven-repo
+    - name: output-area
+      workspace: exchange-area
+  ####
+  - name: deploy-to-env
+    taskRef:
+      name: deploy
+    resources:
+      inputs:
+      - name: gitops-repo
+        resource: gitops-repo
+      - name: image
+        resource: {{ include "springboot-tekton.fullname" . }}-image
+    params:
+    - name: tag
+      value: latest 
+    - name: deployment-folder
+      value: "5-applications/kafka/producer/manifests" 
+    workspaces:
+    - name: output-area
+      workspace: exchange-area
+    runAfter:
+      - maven-and-image-build
+
+  - name: sync-application-stage
+    taskRef:
+      name: argocd-task-sync-and-wait
+    params:
+      - name: application-name
+        value: kafka-producer
+      - name: flags
+        value: --insecure
+    runAfter:
+      - deploy-to-stage

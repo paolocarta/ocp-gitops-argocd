@@ -6,4 +6,9 @@ metadata:
 kind: Namespace
 apiVersion: v1
 metadata:
+  name: amqstreams-cicd
+---
+kind: Namespace
+apiVersion: v1
+metadata:
   name: amqstreams-target

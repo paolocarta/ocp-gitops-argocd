@@ -157,7 +157,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafka-prod-cons
+  name: kafka-producer
   namespace: argocd
 spec:
   destination:
@@ -167,13 +167,13 @@ spec:
   ignoreDifferences:
     - group: apps.openshift.io
       jsonPointers:
-        - /spec/template/spec/containers/image
+        - /spec/template/spec/containers
       kind: DeploymentConfig
   source:
-    path: 5-applications/kafka-prod-cons
+    path: 5-applications/kafka/producer/manifests
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: master
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
+      selfHeal: true

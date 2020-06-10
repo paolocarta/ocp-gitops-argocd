@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: kafka-producer-first-pipe-run
+spec:
+  pipelineRef:
+    name: kafka-producer-pipeline
+  resources:
+  - name: kafka-producer-source
+    resourceRef:
+      name: kafka-producer-git-first-run
+  - name: gitops-repo
+    resourceRef:
+      name: gitops-manifests-pipe-resource
+  - name: kafka-producer-image
+    resourceRef:
+      name: kafka-producer-image
+  serviceAccountName: pipeline-with-keys
+  workspaces:
+  - name: local-maven-repo
+    persistentVolumeClaim:
+      claimName: maven-repo-pvc-spring-rest
+  - name: exchange-area
+    persistentVolumeClaim:
+      claimName: exchange-area-pvc-spring-rest
+  timeout: 20m0s

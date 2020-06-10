@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: gitops-manifests-pipe-resource
+spec:
+  type: git
+  params:
+  - name: url
+    value: git@github.com:paolocarta/ocp-gitops-argocd.git
+  - name: revision
+    value: master

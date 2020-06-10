@@ -1,0 +1,53 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  labels:
+{{ include "springboot-tekton.labels" . | nindent 4 }}
+  name: deploy
+spec:
+  workspaces:
+    - name: output-area
+  
+  params:
+    - description: The image tag
+      name: tag
+      type: string
+      default: latest
+    - description: the deployment
+      name: deployment-folder
+      type: string
+      default: manifests
+  
+  resources:
+    inputs:
+      - name: gitops-repo
+        type: git
+      - name: image
+        type: image
+  
+  steps:
+  - name: kustomize-version-update
+    image: clamer/kikd:1.0.3
+    workingDir: /workspace/gitops-repo/$(params.deployment-folder)
+    script: |
+      kustomize edit set image \
+        "$(resources.inputs.image.url)":"$(cat /workspace/output-area/version)"
+
+  - name: git-commit-repo
+    image: clamer/kikd:1.0.3
+    workingDir: /workspace/gitops-repo
+    securityContext:
+      privileged: true
+    script: |
+      git config user.email "tekton-bot@gmail.com"
+      git config user.name "Tekton Bot"
+      git commit -am "updated app {{ include "springboot-tekton.fullname" . }} to version $(cat /workspace/output-area/version)"
+
+  - name: git-push-repo
+    image: clamer/kikd:1.0.3
+    workingDir: /workspace/gitops-repo
+    securityContext:
+      privileged: true
+    script: |
+      cp -r /tekton/home/.ssh /root/
+      git push origin master
