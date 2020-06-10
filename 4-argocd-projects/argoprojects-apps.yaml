@@ -50,7 +50,7 @@ spec:
         value: developerteam1
     path: 5-applications/spring-rest/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: feature/deploy-kustomize
   ignoreDifferences:
   - group: tekton.dev
     kind: PipelineRun
@@ -127,9 +127,9 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: demoapp
   source:
-    path: 5-applications/spring-rest/manifests/stage
+    path: 5-applications/spring-rest/manifests/overlays/stage
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: feature/deploy-kustomize
   syncPolicy:
     automated:
       prune: true
@@ -146,9 +146,9 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: demoapp
   source:
-    path: 5-applications/spring-rest/manifests/prod
+    path: 5-applications/spring-rest/manifests/overlays/prod
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: HEAD
+    targetRevision: feature/deploy-kustomize
   syncPolicy:
     automated:
       prune: true

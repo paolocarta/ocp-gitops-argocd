@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+
+namespace: developerteam1-stage
+
+# namePrefix: alices-
+# nameSuffix: -v2
+
+# commonLabels:
+#   someName: someValue
+
+# commonAnnotations:
+#   oncallPager: 800-555-1212
+
+patchesStrategicMerge:
+- replica-and-rollout-strategy.yaml
+- infra.yaml
+
+images:
+- name: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot
+  newTag: 1.1.4
+
+resources:
+- ../../base

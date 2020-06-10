@@ -4,14 +4,11 @@ metadata:
   labels:
     app: basic-spring-boot
   name: basic-spring-boot
-  namespace: developerteam1-prod
 spec:
   replicas: 2
   selector:
     matchLabels:
       deployment: basic-spring-boot
-  # strategy:
-  #   type: Recreate
   template:
     metadata:
       name: basic-spring-boot
@@ -26,10 +23,10 @@ spec:
         image: image-registry.openshift-image-registry.svc:5000/developerteam1-cicd/basic-spring-boot:1.1.1
         resources:
           requests:
-            cpu: 400m
-            memory: 500Mi
+            cpu: 300m
+            memory: 400Mi
           limits:
-            cpu: 1200m
+            cpu: 1500m
             memory: 1Gi
         ports:
         - containerPort: 8080

@@ -6,7 +6,6 @@ metadata:
   labels:
     app: basic-spring-boot
   name: basic-spring-boot
-  namespace: developerteam1-prod
 spec:
   ports:
   - port: 8080
@@ -22,7 +21,6 @@ metadata:
   labels:
     app: basic-spring-boot
   name: basic-spring-boot
-  namespace: developerteam1-prod
 spec:
   to:
     kind: Service
@@ -38,4 +36,3 @@ metadata:
   labels:
     app: basic-spring-boot
   name: basic-spring-boot
-  namespace: developerteam1-prod
