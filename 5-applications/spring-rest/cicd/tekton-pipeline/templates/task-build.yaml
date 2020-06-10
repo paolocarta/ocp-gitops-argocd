@@ -111,6 +111,7 @@ spec:
 
   - name: new-version
     image: clamer/kikd:1.0.3
+    imagePullPolicy: Always
     workingDir: /workspace/source
     script: |
       cp -r /tekton/home/.ssh /root/ && \
@@ -120,6 +121,7 @@ spec:
 
   - name: tag-git-repo
     image: clamer/kikd:1.0.3
+    imagePullPolicy: Always
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:
@@ -163,6 +165,7 @@ spec:
 
   - name: push-git-tag
     image: clamer/kikd:1.0.3
+    imagePullPolicy: Always
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:

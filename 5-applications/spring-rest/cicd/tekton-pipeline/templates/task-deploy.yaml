@@ -25,6 +25,7 @@ spec:
   steps:
   - name: kustomize-version-update
     image: clamer/kikd:1.0.3
+    imagePullPolicy: Always
     workingDir: /workspace/gitops-repo/$(params.deployment-folder)
     script: |
       kustomize edit set image \
@@ -32,6 +33,7 @@ spec:
 
   - name: git-commit-repo
     image: clamer/kikd:1.0.3
+    imagePullPolicy: Always
     workingDir: /workspace/gitops-repo
     securityContext:
       privileged: true
@@ -42,6 +44,7 @@ spec:
 
   - name: git-push-repo
     image: clamer/kikd:1.0.3
+    imagePullPolicy: Always
     workingDir: /workspace/gitops-repo
     securityContext:
       privileged: true
