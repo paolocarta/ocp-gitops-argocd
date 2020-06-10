@@ -74,6 +74,6 @@ spec:
       - name: exchange-area
         persistentVolumeClaim:
           claimName: exchange-area-pvc-spring-rest
-      timeout: 1h0m0s
+      timeout: 20m0s
 
 
