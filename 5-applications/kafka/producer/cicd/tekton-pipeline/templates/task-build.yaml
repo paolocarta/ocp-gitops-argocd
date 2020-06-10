@@ -100,7 +100,7 @@ spec:
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     command: ["cp"]
     args:
-      - /workspace/source/target/shift-rest-1.0.0-SNAPSHOT.jar
+      - /workspace/source/target/*.jar
       - /workspace/source/upload 
 
   - name: copy-assets-2
