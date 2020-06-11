@@ -94,13 +94,13 @@ spec:
     command: ["mkdir"]
     args:
       - -p
-      - /workspace/source/upload
+      - /workspace/source/upload/target
 
   - name: copy-assets 
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     workingDir: /workspace/source
     script: |
-      cp target/{{ include "springboot-tekton.fullname" . }}-0.0.1-SNAPSHOT.jar upload
+      cp target/{{ include "springboot-tekton.fullname" . }}-0.0.1-SNAPSHOT.jar upload/target
 
   - name: copy-assets-2
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
@@ -134,6 +134,7 @@ spec:
       --tls-verify=$(inputs.params.TLSVERIFY) --layers \
       -f "$(inputs.params.DOCKERFILE)" -t "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)" \
       "$(inputs.params.CONTEXT)"
+
     volumeMounts:
     - name: varlibcontainers
       mountPath: /var/lib/containers
@@ -147,6 +148,7 @@ spec:
       buildah push --tls-verify=$(inputs.params.TLSVERIFY) \
       "$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)" \
       "docker://$(outputs.resources.image.url)":"$(cat /workspace/output-area/version)"
+      
     volumeMounts:
     - name: varlibcontainers
       mountPath: /var/lib/containers
