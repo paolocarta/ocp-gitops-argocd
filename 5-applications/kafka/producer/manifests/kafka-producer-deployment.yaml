@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kafka-producer
+  name: kafka-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: kafka-producer
+  template:
+    metadata:
+      name: kafka-producer
+      labels:
+        app: kafka-producer
+        deployment: kafka-producer
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: kafka-producer
+        image: image-registry.openshift-image-registry.svc:5000/amqstreams-cicd/kafka-producer:0.0.1
+        resources:
+          requests:
+            cpu: 300m
+            memory: 400Mi
+          limits:
+            cpu: 1500m
+            memory: 1Gi
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5

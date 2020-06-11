@@ -21,6 +21,6 @@ spec:
     protocol: TCP
     targetPort: 8778
   selector:
-    deploymentconfig: kafka-producer
+    deployment: kafka-producer
   sessionAffinity: None
   type: ClusterIP
