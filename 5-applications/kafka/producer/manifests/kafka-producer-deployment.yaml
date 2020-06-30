@@ -20,7 +20,8 @@ spec:
     spec:
       containers:
       - name: kafka-producer
-        image: image-registry.openshift-image-registry.svc:5000/amqstreams-cicd/kafka-producer:0.0.3
+        image: clamer/kafka-producer:0.0.3
+        # image: image-registry.openshift-image-registry.svc:5000/amqstreams-cicd/kafka-producer:0.0.3
         resources:
           requests:
             cpu: 300m
