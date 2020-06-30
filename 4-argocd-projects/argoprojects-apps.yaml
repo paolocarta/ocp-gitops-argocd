@@ -151,44 +151,44 @@ spec:
     automated:
       prune: true
       selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: tekton-pipeline-kafka-producer
-  namespace: argocd
-spec:
-  destination:
-    namespace: amqstreams-cicd
-    server: 'https://kubernetes.default.svc'
-  project: cicd
-  source:
-    # chart: springboot-tekton
-    helm:
-      valueFiles:
-      - values.yaml
-      parameters:
-      - name: deploy.namespace.prefix
-        value: amqstreams
-    path: 5-applications/kafka/producer/cicd/tekton-pipeline
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
-  ignoreDifferences:
-  - group: tekton.dev
-    kind: PipelineRun
-    # name: basic-spring-boot-first-pipe-run
-    # namespace: developerteam1-cicd
-    jsonPointers:
-    - /spec
-    - /metadata
-  - group: tekton.dev
-    kind: TaskRun
-    # name: basic-spring-boot-first-pipe-run
-    # namespace: developerteam1-cicd
-    jsonPointers:
-    - /spec
-    - /metadata
-  syncPolicy:
-    automated:
-      prune: false
-      selfHeal: false
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: tekton-pipeline-kafka-producer
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: amqstreams-cicd
+#     server: 'https://kubernetes.default.svc'
+#   project: cicd
+#   source:
+#     # chart: springboot-tekton
+#     helm:
+#       valueFiles:
+#       - values.yaml
+#       parameters:
+#       - name: deploy.namespace.prefix
+#         value: amqstreams
+#     path: 5-applications/kafka/producer/cicd/tekton-pipeline
+#     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+#     targetRevision: master
+#   ignoreDifferences:
+#   - group: tekton.dev
+#     kind: PipelineRun
+#     # name: basic-spring-boot-first-pipe-run
+#     # namespace: developerteam1-cicd
+#     jsonPointers:
+#     - /spec
+#     - /metadata
+#   - group: tekton.dev
+#     kind: TaskRun
+#     # name: basic-spring-boot-first-pipe-run
+#     # namespace: developerteam1-cicd
+#     jsonPointers:
+#     - /spec
+#     - /metadata
+#   syncPolicy:
+#     automated:
+#       prune: false
+#       selfHeal: false
