@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
   name: basic-spring-boot-git-first-run
+  # namespace: developerteam1-cicd
 spec:
   type: git
   params:
