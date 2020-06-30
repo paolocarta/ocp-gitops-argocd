@@ -89,22 +89,22 @@ spec:
     automated:
       prune: true
       selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: operators
-  namespace: argocd
-spec:
-  description: Lab Operators
-  clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-  destinations:
-    - namespace: '*'
-      server: '*'
-  sourceRepos:
-  - https://github.com/paolocarta/ocp-gitops-argocd.git
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: AppProject
+# metadata:
+#   name: operators
+#   namespace: argocd
+# spec:
+#   description: Lab Operators
+#   clusterResourceWhitelist:
+#     - group: '*'
+#       kind: '*'
+#   destinations:
+#     - namespace: '*'
+#       server: '*'
+#   sourceRepos:
+#   - https://github.com/paolocarta/ocp-gitops-argocd.git
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application

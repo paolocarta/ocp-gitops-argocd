@@ -99,7 +99,7 @@ spec:
   destination:
     namespace: developerteam1-stage
     server: 'https://kubernetes.default.svc'
-  project: demoapp
+  project: developerteam1
   source:
     path: 5-applications/spring-rest/manifests/overlays/stage
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -118,7 +118,7 @@ spec:
   destination:
     namespace: developerteam1-prod
     server: 'https://kubernetes.default.svc'
-  project: demoapp
+  project: developerteam1
   source:
     path: 5-applications/spring-rest/manifests/overlays/prod
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
