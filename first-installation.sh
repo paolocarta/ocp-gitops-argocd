@@ -1,5 +1,5 @@
 #!/bin/bash
-cd 1-argocd-installation-manual-steps
+cd 1.1-argocd-installation-manual-steps
 
 oc apply -f 1-argo-ns.yaml
 oc apply -f 2-argo-og.yaml
@@ -17,5 +17,6 @@ oc apply -f 7-security-contraint.yaml
 
 sleep 60
 
+cd ..
 oc apply -f 1.2-argocd-self-gitops/
 
