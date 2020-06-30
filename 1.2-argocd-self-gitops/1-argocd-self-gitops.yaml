@@ -9,7 +9,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: bootstrap
   source:
-    path: 1-argocd-installation-manual-steps
+    path: 1.1-argocd-installation-manual-steps
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
     targetRevision: master
   syncPolicy:
