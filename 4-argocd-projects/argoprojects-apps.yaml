@@ -151,6 +151,30 @@ spec:
     automated:
       prune: true
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-consumer
+  namespace: argocd
+spec:
+  destination:
+    namespace: amqstreams
+    server: 'https://kubernetes.default.svc'
+  project: demoapp
+  ignoreDifferences:
+    - group: apps.openshift.io
+      jsonPointers:
+        - /spec/template/spec/containers
+      kind: DeploymentConfig
+  source:
+    path: 5-applications/kafka/consumer/manifests
+    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 # ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application

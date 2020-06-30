@@ -1,62 +1,47 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: kafka-consumer
-    app.kubernetes.io/component: kafka-consumer
-    app.kubernetes.io/instance: kafka-consumer
   name: kafka-consumer
 spec:
   replicas: 3
-  revisionHistoryLimit: 10
   selector:
-    deploymentconfig: kafka-consumer
-  strategy:
-    activeDeadlineSeconds: 21600
-    resources: {}
-    rollingParams:
-      intervalSeconds: 1
-      maxSurge: 25%
-      maxUnavailable: 25%
-      timeoutSeconds: 600
-      updatePeriodSeconds: 1
-    type: Rolling
+    matchLabels:
+      deployment: kafka-consumer
   template:
     metadata:
-      annotations:
-        openshift.io/generated-by: OpenShiftNewApp
-      creationTimestamp: null
+      name: kafka-consumer
       labels:
-        deploymentconfig: kafka-consumer
+        app: kafka-consumer
+        deployment: kafka-consumer
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/amqstreams/kafka-consumer:latest
-        imagePullPolicy: Always
-        name: kafka-consumer
+      - name: kafka-consumer
+        image: clamer/kafka-consumer:0.0.1
+        # image: image-registry.openshift-image-registry.svc:5000/amqstreams-cicd/kafka-consumer:0.0.1
+        resources:
+          requests:
+            cpu: 300m
+            memory: 400Mi
+          limits:
+            cpu: 1500m
+            memory: 1Gi
         ports:
         - containerPort: 8080
+          name: http
           protocol: TCP
-        - containerPort: 8443
-          protocol: TCP
-        - containerPort: 8778
-          protocol: TCP
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-  test: false
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - kafka-consumer
-      from:
-        kind: ImageStreamTag
-        name: kafka-consumer:latest
-        namespace: amqstreams
-    type: ImageChange
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5
