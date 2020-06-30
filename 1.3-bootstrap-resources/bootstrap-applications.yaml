@@ -1,4 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infra
+  namespace: argocd
+spec:
+  description: Lab Cluster
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  sourceRepos:
+  - https://github.com/paolocarta/ocp-gitops-argocd.git
+---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: all-namespaces
@@ -7,7 +23,7 @@ spec:
   destination:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
-  project: bootstrap
+  project: infra
   source:
     path: 2-namespaces
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -26,7 +42,7 @@ spec:
   destination:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
-  project: bootstrap
+  project: infra
   source:
     path: 2.1-users-groups
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -45,7 +61,7 @@ spec:
   destination:
     namespace: argocd
     server: 'https://kubernetes.default.svc'
-  project: bootstrap
+  project: infra
   source:
     path: 3-permissions
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -99,7 +115,7 @@ spec:
   destination:
     namespace: openshift-operators
     server: 'https://kubernetes.default.svc'
-  project: bootstrap
+  project: infra
   source:
     path: 7-operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git

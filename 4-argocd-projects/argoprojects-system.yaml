@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: infra
+  name: middleware
   namespace: argocd
 spec:
   description: Lab Cluster
@@ -23,7 +23,7 @@ spec:
   destination:
     namespace: amqstreams
     server: 'https://kubernetes.default.svc'
-  project: infra
+  project: middleware
   source:
     path: 6-middleware/amqstreams
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -42,7 +42,7 @@ spec:
   destination:
     namespace: amqstreams-target
     server: 'https://kubernetes.default.svc'
-  project: infra
+  project: middleware
   source:
     path: 6-middleware/amqstreams/mirrored-cluster
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -66,7 +66,7 @@ spec:
   #   jsonPointers:
   #   - /spec/members
   #   kind: ServiceMeshMemberRoll
-  project: infra
+  project: middleware
   source:
     path: 6-middleware/servicemesh
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
@@ -85,7 +85,7 @@ spec:
   destination:
     namespace: sealed-secrets
     server: 'https://kubernetes.default.svc'
-  project: infra
+  project: middleware
   source:
     path: 6-middleware/sealed-secrets
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
