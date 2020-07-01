@@ -16,6 +16,7 @@ oc apply -f 6-argocd-cluster-admin.yaml
 oc apply -f 7-security-contraint.yaml
 
 sleep 60
+echo Waiting 60 seconds for ArgoCD to come up
 
 cd ..
 oc apply -f 1.2-argocd-self-gitops/
