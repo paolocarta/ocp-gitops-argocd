@@ -2,7 +2,7 @@ apiVersion: tekton.dev/v1alpha1
 kind: PipelineRun
 metadata:
   name: basic-spring-boot-first-pipe-run
-  # namespace: developerteam1-cicd
+  namespace: developerteam1-cicd
 spec:
   pipelineRef:
     name: basic-spring-boot-pipeline
