@@ -3,6 +3,8 @@ kind: PipelineRun
 metadata:
   name: basic-spring-boot-first-pipe-run
   namespace: developerteam1-cicd
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   pipelineRef:
     name: basic-spring-boot-pipeline
