@@ -21,6 +21,8 @@ spec:
     kind: PipelineResource
     metadata:
       name: $(params.git-repo-name)-code-$(uid)
+      annotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
       labels:
         commit-id: $(params.git-commit-id)
         # branch: $(params.git-branch)
@@ -51,6 +53,8 @@ spec:
     kind: PipelineRun
     metadata:
       name: $(params.git-repo-name)-pr-$(uid)
+      annotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
       labels:
         commit-id: $(params.git-commit-id)
     spec:
