@@ -57,18 +57,17 @@ spec:
     # name: basic-spring-boot-first-pipe-run
     # namespace: developerteam1-cicd
     jsonPointers:
-    - /
-    # - /spec
-    # - /metadata
-    # - /status
+    - /spec
+    - /metadata
+    - /status
   - group: tekton.dev
     kind: TaskRun
     # name: basic-spring-boot-first-pipe-run
     # namespace: developerteam1-cicd
     jsonPointers:
-    - /
-    # - /spec
-    # - /metadata
+    - /spec
+    - /metadata
+    - /status
   syncPolicy:
     automated:
       prune: false
