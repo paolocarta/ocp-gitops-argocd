@@ -15,10 +15,12 @@ spec:
     openShiftOAuth: true
   grafana:
     enabled: true
-    route: true
+    route: 
+      enabled: true
   prometheus:
     enabled: true
-    route: true
+    route: 
+      enabled: true
   rbac:
     defaultPolicy: 'role:readonly'
     policy: |
@@ -32,7 +34,8 @@ spec:
     - url: https://github.com/paolocarta/ocp-gitops-argocd.git
   server:
     enabled: true
-    route: true
+    route: 
+      enabled: true
     autoscale:
       enabled: true
       hpa:
