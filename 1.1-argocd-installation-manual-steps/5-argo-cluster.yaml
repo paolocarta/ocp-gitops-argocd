@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   # version: v1.5.5
-  usersAnonymousEnabled: false
+  usersAnonymousEnabled: true
   ha:
     enabled: true
   dex:

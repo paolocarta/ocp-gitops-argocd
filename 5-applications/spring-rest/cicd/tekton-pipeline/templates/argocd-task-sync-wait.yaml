@@ -29,10 +29,9 @@ spec:
     - name: sync
       image: argoproj/argocd:$(params.argocd-version)
       script: |
-        argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags) --server $ARGOCD_SERVER \
-        --auth-token $ARGOCD_AUTH_TOKEN
+        argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags) --server $ARGOCD_SERVER
     - name: wait
       image: argoproj/argocd:$(params.argocd-version)
+      #         --auth-token $ARGOCD_AUTH_TOKEN
       script: |
-        argocd app wait $(params.application-name) --health $(params.flags) --server $ARGOCD_SERVER \
-        --auth-token $ARGOCD_AUTH_TOKEN
+        argocd app wait $(params.application-name) --health $(params.flags) --server $ARGOCD_SERVER
