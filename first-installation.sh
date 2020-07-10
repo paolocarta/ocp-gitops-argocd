@@ -21,3 +21,12 @@ echo Waiting 60 seconds for ArgoCD to come up
 cd ..
 oc apply -f 1.2-argocd-self-gitops/
 
+sleep 1
+
+### for the initial concurrency issue
+oc apply -f 2-namespaces/
+sleep 1
+oc apply -f 3-permissions/
+sleep 1
+
+
