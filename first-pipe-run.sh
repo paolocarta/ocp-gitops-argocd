@@ -1,8 +1,9 @@
 #!/bin/bash
 
-cd 5-applications/spring-rest/cicd/tekton-pipeline/first-test-run
+source tmp-manual-step.sh
 
-oc apply -f pipelineresources.yaml
-oc apply -f first-pipeline-run.yaml
+oc apply -f first-test-run/pipelineresources.yaml
+sleep 1
+oc apply -f first-test-run/first-pipeline-run.yaml
 
 
