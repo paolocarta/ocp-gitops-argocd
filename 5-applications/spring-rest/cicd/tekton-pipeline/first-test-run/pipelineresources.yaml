@@ -12,15 +12,3 @@ spec:
     value: git@github.com:paolocarta/spring-rest-tekton-pipeline.git
   - name: revision
     value: master
-# ---
-# apiVersion: tekton.dev/v1alpha1
-# kind: PipelineResource
-# metadata:
-#   name: basic-spring-boot-templates-first-run
-# spec:
-#   type: git
-#   params:
-#   - name: url
-#     value: git@github.com:paolocarta/spring-rest-tekton-pipeline.git
-#   - name: revision
-#     value: master

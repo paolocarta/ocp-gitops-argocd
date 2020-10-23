@@ -9,8 +9,10 @@ spec:
   - name: local-maven-repo
   - name: exchange-area
   resources:
+  ### The microservice
   - name: {{ include "springboot-tekton.fullname" . }}-source
     type: git
+  ### GitOps repo with manifests
   - name: gitops-repo
     type: git
   - name: {{ include "springboot-tekton.fullname" . }}-image
