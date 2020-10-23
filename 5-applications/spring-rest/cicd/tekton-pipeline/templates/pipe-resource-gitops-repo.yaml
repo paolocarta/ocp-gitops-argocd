@@ -8,4 +8,4 @@ spec:
   - name: url
     value: git@github.com:paolocarta/ocp-gitops-argocd.git
   - name: revision
-    value: gitops-cicd-pipeline-only
+    value: refs/heads/gitops-cicd-pipeline-only
