@@ -1,6 +1,0 @@
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  labels:
-{{ include "springboot-tekton.labels" . | nindent 4 }}
-  name: {{ include "springboot-tekton.fullname" . }}

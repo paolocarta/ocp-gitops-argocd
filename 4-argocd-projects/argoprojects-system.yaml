@@ -17,68 +17,6 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: amqstreams
-  namespace: argocd
-spec:
-  destination:
-    namespace: amqstreams
-    server: 'https://kubernetes.default.svc'
-  project: middleware
-  source:
-    path: 6-middleware/amqstreams
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: amqstreams-target
-  namespace: argocd
-spec:
-  destination:
-    namespace: amqstreams-target
-    server: 'https://kubernetes.default.svc'
-  project: middleware
-  source:
-    path: 6-middleware/amqstreams/mirrored-cluster
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: openshift-service-mesh
-  namespace: argocd
-spec:
-  destination:
-    namespace: istio-system
-    server: 'https://kubernetes.default.svc'
-  # ignoreDifferences:
-  # - group: maistra.io
-  #   jsonPointers:
-  #   - /spec/members
-  #   kind: ServiceMeshMemberRoll
-  project: middleware
-  source:
-    path: 6-middleware/servicemesh
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
   name: openshift-sealed-secrets
   namespace: argocd
 spec:
