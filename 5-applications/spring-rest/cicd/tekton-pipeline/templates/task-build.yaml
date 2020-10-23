@@ -89,17 +89,15 @@ spec:
 
   - name: new-version
     image: clamer/kikd:1.0.3
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     workingDir: /workspace/source
     script: |
       cp -r /tekton/home/.ssh /root/ && \
-      git fetch --tags && jx-release-version > /workspace/output-area/version && \
-      whoami
-      # cat /workspace/output-area/version
+      git fetch --tags && jx-release-version > /workspace/output-area/version
 
   - name: tag-git-repo
     image: clamer/kikd:1.0.3
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:
@@ -133,17 +131,9 @@ spec:
     securityContext:
       privileged: true
 
-  # - name: tag-image
-  #   image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
-  #   # command: ["/usr/local/bin/oc"]
-  #   script: |
-  #     oc tag \
-  #     "$(inputs.params.imageStream)":"$(cat /workspace/output-area/version)" \
-  #     "{{ .Values.deploy.namespace.prefix }}-cicd/$(inputs.params.imageStream)":"$(cat /workspace/output-area/version)"
-
   - name: push-git-tag
     image: clamer/kikd:1.0.3
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     workingDir: /workspace/source
     command: ["/bin/bash"]
     args:
