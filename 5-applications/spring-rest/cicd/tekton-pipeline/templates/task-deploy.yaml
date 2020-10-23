@@ -38,6 +38,7 @@ spec:
     script: |
       git config user.email "tekton-bot@gmail.com"
       git config user.name "Tekton Bot"
+      git branch --show-current
       git commit -am "updated app spring-rest to version $(cat /workspace/output-area/version)"
 
   - name: git-push-repo
@@ -47,4 +48,5 @@ spec:
       privileged: true
     script: |
       cp -r /tekton/home/.ssh /root/
+      git branch --show-current
       git push origin gitops-cicd-pipeline-only
