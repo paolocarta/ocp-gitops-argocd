@@ -27,7 +27,7 @@ spec:
   source:
     path: 2-namespaces
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
@@ -46,7 +46,7 @@ spec:
   source:
     path: 2.1-users-groups
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
@@ -65,7 +65,7 @@ spec:
   source:
     path: 3-permissions
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
@@ -84,7 +84,7 @@ spec:
   source:
     path: 4-argocd-projects
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
@@ -103,7 +103,7 @@ spec:
   source:
     path: 7-operators
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true

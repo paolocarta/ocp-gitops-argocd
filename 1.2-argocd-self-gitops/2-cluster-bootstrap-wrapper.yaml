@@ -43,7 +43,7 @@ spec:
   source:
     path: 1.3-bootstrap-resources
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
@@ -62,7 +62,7 @@ spec:
   source:
     path: 1.2-argocd-self-gitops
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true

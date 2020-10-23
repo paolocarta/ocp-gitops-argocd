@@ -50,7 +50,7 @@ spec:
         value: developerteam1
     path: 5-applications/spring-rest/cicd/tekton-pipeline
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   ignoreDifferences:
   - group: tekton.dev
     kind: PipelineRun
@@ -84,7 +84,7 @@ spec:
   source:
     path: 5-applications/spring-rest/manifests/overlays/stage
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
@@ -103,7 +103,7 @@ spec:
 #   source:
 #     path: 5-applications/spring-rest/manifests/overlays/prod
 #     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-#     targetRevision: master
+#     targetRevision: gitops-cicd-pipeline-only
 #   syncPolicy:
 #     automated:
 #       prune: true

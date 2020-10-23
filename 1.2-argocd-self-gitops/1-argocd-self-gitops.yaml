@@ -11,7 +11,7 @@ spec:
   source:
     path: 1.1-argocd-installation-manual-steps
     repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: master
+    targetRevision: gitops-cicd-pipeline-only
   syncPolicy:
     automated:
       prune: true
