@@ -47,4 +47,4 @@ spec:
       privileged: true
     script: |
       cp -r /tekton/home/.ssh /root/
-      git push origin master
+      git push origin gitops-cicd-pipeline-only

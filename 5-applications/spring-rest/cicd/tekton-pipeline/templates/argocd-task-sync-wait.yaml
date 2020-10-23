@@ -8,7 +8,7 @@ spec:
       description: name of the application to sync
     - name: revision
       description: the revision to sync to
-      default: master
+      default: gitops-cicd-pipeline-only
     - name: flags
       default: --
     - name: argocd-version

@@ -66,28 +66,6 @@ spec:
     - -Dmaven.repo.local=$(workspaces.maven-repo.path)
     - "$(inputs.params.GOALS)"
 
-{{- if .Values.sonar.enabled }}
-  - name: sonar-scan
-    image: {{ .Values.maven.image.repository }}:{{ .Values.maven.image.tag }}
-    workingDir: /workspace/source
-    command:
-    - /usr/bin/mvn
-    args:
-    - -Dmaven.repo.local=$(workspaces.maven-repo.path)
-    - -Dsonar.host.url={{ .Values.sonar.url }}
-    - sonar:sonar
-
-  - name: quality-gate
-    image: quay.io/sychen/openshift-cli-jq:latest
-    command: ["bash"]
-    workingDir: /workspace/source
-    args:
-      - /var/sonar/sonar.sh
-    volumeMounts:
-    - name: "$(inputs.params.volumeName)"
-      mountPath: /var/sonar
-{{- end }}
-
   - name: make-upload-dir
     image: quay.io/openshift-pipeline/openshift-cli:v0.8.0
     command: ["mkdir"]

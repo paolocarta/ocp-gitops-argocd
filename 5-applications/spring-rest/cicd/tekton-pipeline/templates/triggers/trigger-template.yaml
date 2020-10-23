@@ -12,7 +12,7 @@ spec:
     description: The git commit sha
   - name: git-branch
     description: The git revision
-    default: master
+    default: gitops-cicd-pipeline-only
   - name: git-repo-name
     description: The name of the deployment to be created / patched
 ####
