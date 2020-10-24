@@ -13,22 +13,3 @@ spec:
       server: '*'
   sourceRepos:
   - https://github.com/paolocarta/ocp-gitops-argocd.git
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: openshift-sealed-secrets
-  namespace: argocd
-spec:
-  destination:
-    namespace: sealed-secrets
-    server: 'https://kubernetes.default.svc'
-  project: middleware
-  source:
-    path: 6-middleware/sealed-secrets
-    repoURL: https://github.com/paolocarta/ocp-gitops-argocd.git
-    targetRevision: gitops-cicd-pipeline-only
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
